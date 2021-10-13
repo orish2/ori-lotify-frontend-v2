@@ -1,6 +1,6 @@
 import storageService from '../services/storage.service'
 import { utilService } from './util.service.js'
-import { gPlaylists } from "./data";
+// import { gPlaylists } from "./data";
 import axios from 'axios'
 export const guestService = {
     query,
@@ -15,7 +15,7 @@ export const guestService = {
     searchStation
 }
 const KEY = 'stations';
-var gStations;
+var gStations = [];
 let songCache = []
 _createStations();
 
