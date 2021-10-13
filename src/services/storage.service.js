@@ -1,6 +1,7 @@
 function loadFromStorage(key) {
+    // debugger
     var val = localStorage.getItem(key)
-    return (val)? JSON.parse(val) : null;
+    return (val) ? JSON.parse(val) : null;
 }
 
 function saveToStorage(key, val) {
@@ -8,7 +9,7 @@ function saveToStorage(key, val) {
 }
 
 function removeFromStorage(key) {
-    localStorage.removeItem(key) 
+    localStorage.removeItem(key)
 }
 
 

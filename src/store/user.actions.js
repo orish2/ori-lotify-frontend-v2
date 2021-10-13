@@ -6,10 +6,12 @@ import { socketService } from "../services/socket.service.js";
 export function loadUser() {
     return async dispatch => {
         try {
+            // debugger
             let user = await userService.getLoggedinUser()
-            if (!user) {
-                user = await userService.login({ username: 'guest' })
-            }
+            console.log('user', user);
+            // if (!user) {
+            //     user = await userService.login({ username: 'guest' })
+            // }
             dispatch({ type: 'SET_USER', user })
         } catch (err) {
             console.log('UserActions: err in loadUsers', err)

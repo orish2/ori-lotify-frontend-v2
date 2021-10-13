@@ -38,10 +38,11 @@ async function signup(user) {
 }
 
 async function login(credentials) {
-    let userToSave = await axios.post(`${URL}/auth/login`, credentials)
-    userToSave = userToSave.data
-    storageService.saveToStorage(STORAGE_KEY, userToSave)
-    return userToSave
+    let user = await axios.post(`${URL}/auth/login`, credentials)
+    user = user.data
+    console.log('user from login', user);
+    storageService.saveToStorage(STORAGE_KEY, user)
+    return user
 }
 
 async function logout() {
@@ -52,15 +53,15 @@ async function logout() {
 
 
 async function updateUser(user) {
-    if (user.username !== "guest") {
-        let updatedUser = await axios.put(`${URL}/user/${user._id}`, user)
-        _saveUserToStorage(updatedUser.data)
-        return updatedUser.data
-
-    }
-    else {
+    if (user.username === 'guest') {
         _saveUserToStorage(user)
         return user
+    }
+    else {
+        let updatedUser = await axios.put(`${URL}/user/${user._id}`, user).data
+        _saveUserToStorage(updatedUser)
+        return updatedUser
+
     }
 
 }
@@ -91,11 +92,12 @@ async function AddToRecentlyPlayed(track, stationOrTrack) {
 }
 
 async function getLoggedinUser() {
+    // debugger
     let user = storageService.loadFromStorage(STORAGE_KEY)
-    console.log(user);
+    // debugger
     if (!user) {
-        await login({ username: "guest" })
-        getLoggedinUser()
+        // debugger
+        user = await login({ username: "guest" })
     }
     return user
 }
@@ -118,7 +120,7 @@ async function addLikeToTrack(trackId, stationOrTrack) {
                 stationToUpdate = await stationServiceNew.getStationByGenre(trackId)
                 console.log('got by genre', stationToUpdate);
             }
-            socketService.emit('add like', { userIdliked: stationToUpdate.createdBy.id, currUser: user, stationName: stationToUpdate.name })
+        socketService.emit('add like', { userIdliked: stationToUpdate.createdBy.id, currUser: user, stationName: stationToUpdate.name })
 
         if (!stationToUpdate.likedByUsers) stationToUpdate.likedByUsers = []
         if (!stationToUpdate.likedByUsers.some(likedByUser => likedByUser.id === user._id)) {
@@ -129,7 +131,7 @@ async function addLikeToTrack(trackId, stationOrTrack) {
     else {
         user.likedTracks.unshift(trackId)
     }
-    
+
     if (user.username !== "guest") {
         user = await updateUser(user)
     }
@@ -159,9 +161,7 @@ async function getUserById(userId) {
     let user = await axios.get(`${URL}/user/${userId}`)
     return user.data
 }
-async function getUsers(filterBy) {
-    filterBy = { filterBy }
-    console.log(filterBy, 'filterBy');
+async function getUsers(filterBy = {}) {
     let res = await axios.get(`${URL}/user`, { params: filterBy })
     return res.data
 }

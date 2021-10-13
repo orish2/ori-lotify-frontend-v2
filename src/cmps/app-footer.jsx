@@ -13,7 +13,7 @@ import {
 import { Duration } from '../services/util.service';
 import { withRouter } from "react-router";
 import heartNotChecked from '../assets/img/heart-regular.svg';
-import { addLikeToTrack,  loadUsers, removeLikeFromTrack } from '../store/user.actions';
+import { addLikeToTrack, loadUsers, removeLikeFromTrack } from '../store/user.actions';
 import { showErrorMsg, showNotificationMsg, showSuccessMsg } from '../services/event-bus.service.js';
 import { socketService } from '../services/socket.service'
 
@@ -32,6 +32,7 @@ class _AppFooter extends Component {
         trackAndUsers: [],
     }
     async componentDidMount() {
+        // debugger
         await this.props.loadUsers()
         socketService.setup()
         socketService.on('send notification', (obj) => {
@@ -203,7 +204,7 @@ class _AppFooter extends Component {
 
 
     render() {
-        const { played, duration, volume, isShuffle} = this.state
+        const { played, duration, volume, isShuffle } = this.state
         const { isPlaying } = this.props
         const track = this.props.currTrack
         return (
@@ -234,7 +235,7 @@ class _AppFooter extends Component {
                         <div className='img-container-player'>
                             {
                                 track &&
-                                <img onClick={this.onGoToplaylist} className='track-img' src={track.imgUrl} alt="track"/>
+                                <img onClick={this.onGoToplaylist} className='track-img' src={track.imgUrl} alt="track" />
                             }
                         </div>
                         <div onClick={this.onGoToplaylist} className="song-name">
@@ -247,7 +248,7 @@ class _AppFooter extends Component {
                                 this.state.isLiked && <span className='isLike' onClick={(ev) => { this.toggleLike(ev) }} class="fas fa-heart"></span>
                             }
                             {
-                                !this.state.isLiked && <img className='isnotLike' src={heartNotChecked} onClick={(ev) => { this.toggleLike(ev) }} alt="like"/>
+                                !this.state.isLiked && <img className='isnotLike' src={heartNotChecked} onClick={(ev) => { this.toggleLike(ev) }} alt="like" />
                             }
                         </div>}
                     </div>

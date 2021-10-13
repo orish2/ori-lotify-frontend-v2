@@ -6,7 +6,7 @@ export function friendReducer(state = initialState, action) {
     switch (action.type) {
         case 'SET_FRIEND_CURR_TRACK':
             //if not following
-            debugger
+            // debugger
             //if (!action.currLoginUser.following?.length) {
             //    newState = { ...state, trackAndUsers: [] }
             //    break
