@@ -1,0 +1,96 @@
+.station-preview {
+  // width: 200px;
+  position: relative;
+
+
+
+  background-color: #181818;
+  padding         : 1rem;
+  border-radius   : 8px;
+  transition      : background-color 0.3s ease;
+  cursor          : pointer;
+
+  &:hover {
+    background-color: #282828;
+
+    .play-icon-container {
+      visibility: visible;
+      opacity   : 1;
+    }
+  }
+
+
+
+  .station-img-container {
+    margin-bottom: 1rem;
+    border-radius: 4px;
+  }
+}
+
+.station-name-header {
+  font-size     : 16px;
+  font-weight   : 700;
+  letter-spacing: normal;
+  line-height   : 24px;
+  text-transform: none;
+}
+
+.img-card {
+  display : block;
+  position: relative;
+}
+
+// .play-icon {
+//   // visibility   : hidden;
+//   // opacity      : 0;
+//   position     : absolute;
+//   width        : 2.1875rem;
+//   height       : 2.1875rem;
+//   bottom       : 8px;
+//   right        : 8px;
+//   transition   : visibility 0s, opacity 0.3s linear;
+//   // cursor    : default;
+// }
+
+.img-container {
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.play-icon-container {
+  visibility      : hidden;
+  opacity         : 0;
+  background-color: #1db954;
+  color           : white;
+  position        : absolute;
+  border-radius   : 50%;
+  bottom          : 8px;
+  right           : 8px;
+  padding         : 20px;
+  transition      : visibility 0s, opacity 0.3s linear;
+
+  &:hover {
+    transform: scale(1.1);
+    cursor   : pointer;
+  }
+
+  // cursor    : default;
+}
+
+
+.play-icon {
+  transition: transform 0.3s ease-in-out;
+  position  : absolute;
+  left      : 50%;
+  top       : 50%;
+  transform : translate(-50%, -50%);
+
+  &.fa-play {
+    text-indent: 1px;
+  }
+
+  //   position: absolute;
+  //   left: 53%;
+  //   top: 51%;
+  //   transform: translate(-50%, -50%);
+}

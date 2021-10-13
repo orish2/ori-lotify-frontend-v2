@@ -1,0 +1,179 @@
+.form-wrapper {
+  background-color: #121212;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  padding: 2.5rem 2.5rem;
+  font-family: "Quicksand-Light";
+  z-index: 10;
+  width: 79%;
+  height: 46%;
+  @media screen and (min-width: 1000px) {
+    width: 400px;
+    height: 400px;
+  }
+
+  .close-form {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: #f6f6f6;
+    font-size: 1.5rem;
+    font-weight: 800;
+    cursor: pointer;
+
+    &:hover {
+      // color: black;
+      color: #1db954;
+    }
+  }
+
+  .form-logo {
+    margin: auto;
+
+    text-align: center;
+    flex-direction: row;
+    margin-bottom: 31px;
+    img {
+      width: 34px;
+      object-fit: cover;
+      margin-right: 8px;
+      margin-bottom: -6px;
+    }
+
+    .brand-name {
+      font-size: 1.4rem;
+      font-weight: 500;
+      // margin-bottom: 2px;
+
+      & > span:nth-of-type(2) {
+        font-size: 2rem;
+        color: rgb(4, 197, 4);
+      }
+    }
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-family: "Quicksand-Light";
+  }
+
+  .login-signup-form {
+    gap: 15px;
+
+    & > * {
+      border: none;
+      border-radius: 5px;
+      width: 90%;
+    }
+
+    button {
+      // border-radius: 8px;
+      height: 2rem;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    input {
+      height: 2rem;
+      outline: none;
+      font-size: 0.8rem;
+      padding-left: 0.5rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 0;
+      border-radius: 4px;
+      color: rgba(255, 255, 255, 0.7);
+      opacity: 1;
+      text-overflow: ellipsis;
+      transition-duration: 0.3s;
+      transition-property: opacity width;
+      outline: none;
+    }
+
+    .submit-btns {
+      gap: 3px;
+
+      // &>* {
+      // flex-basis: 50%;
+      // height: 100%;
+      // }
+    }
+
+    .login-signup-btn {
+      background-color: #1db954;
+      color: #111;
+      border-radius: 56px;
+      font-family: "Quicksand-Bold";
+      color: white;
+      height: 32px;
+
+      &:hover {
+        background-color: #18a74a;
+        font-weight: 700;
+      }
+    }
+
+    .to-sign-in {
+      gap: 6px;
+      align-items: baseline;
+      justify-content: center;
+      font-size: 13px;
+      & > :nth-child(2) {
+        font-size: 0.8rem;
+        font-weight: 500;
+        text-decoration: underline;
+
+        &:hover {
+          cursor: pointer;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .back-to-login {
+      font-size: 0.8rem;
+
+      &:hover {
+        font-size: 0.9rem;
+        cursor: pointer;
+      }
+    }
+
+    .facebook-login-btn-wrapper {
+      position: relative;
+      background-color: rgb(33, 52, 226);
+      color: white;
+      // padding            : 0.5rem;
+      // border-radius   : 3px;
+
+      &:hover {
+        background-color: rgb(10, 29, 199);
+      }
+
+      .facebook-login-btn {
+        display: block;
+      }
+
+      span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block !important;
+        height: 100%;
+        width: 100%;
+        padding: 0 !important;
+
+        button {
+          display: block;
+          min-width: 100% !important;
+          min-height: 100% !important;
+          padding: 0 !important;
+          opacity: 0;
+        }
+      }
+    }
+  }
+}

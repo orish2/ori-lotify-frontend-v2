@@ -1,0 +1,303 @@
+.hamburger-wrapper {
+  width           : 100%;
+  height          : 90px;
+  top             : 0;
+  left            : 0;
+  cursor          : pointer;
+  z-index         : 6;
+  position        : fixed;
+  display         : none;
+  background-color: #121212;
+
+  @media screen and (max-width: 760px) {
+    display: flex;
+  }
+
+  .hamburger {
+    display          : none;
+    align-items      : center;
+    position         : absolute;
+    top              : 20px;
+    // top           : 31px;
+    // left 1rem??
+    left             : 15px;
+    width            : 50px;
+    height           : 50px;
+
+    @media screen and (max-width: 760px) {
+      display: flex;
+    }
+
+    >div {
+      background-color      : #fff;
+      // height             : 4px;
+      height                : 3px;
+      width                 : 35px;
+      border-radius         : 5px;
+      position              : relative;
+      display               : flex;
+      justify-content       : center;
+      align-items           : center;
+      transition            : 0.4s ease;
+
+      &::before {
+        content               : '';
+        width                 : 100%;
+        // height          : 4px;
+        height                : 3px;
+        border-radius         : 5px;
+        position              : absolute;
+        // top                : -14px;
+        top                   : -10px;
+        background-color      : inherit;
+      }
+
+      &::after {
+        content               : '';
+        width                 : 100%;
+        border-radius         : 5px;
+        // height             : 4px;
+        height                : 3px;
+        position              : absolute;
+        // top             : 14px;
+        top                   : 10px;
+        background-color      : inherit;
+      }
+    }
+
+    &.active {
+
+      >div {
+        transform: rotate(135deg);
+
+        &::before {
+          top      : 0;
+          transform: rotate(90deg);
+        }
+
+        &::after {
+          top      : 0;
+          transform: rotate(90deg);
+        }
+
+      }
+    }
+  }
+}
+
+
+
+
+.banner {
+  display      : flex;
+  align-items  : center;
+  font-size    : 2rem;
+  padding-left : 1rem;
+  color        : white;
+  margin-bottom: 1rem;
+
+  @media screen and (max-width:720px) {
+    display: none;
+  }
+
+  h4>span {
+    color: #04c504;
+  }
+
+  img {
+    display      : block;
+    width        : 1.6rem;
+    margin-right : 5px;
+    // object-fit: cover;
+  }
+}
+
+.main-nav ul {
+  color          : rgb(179, 179, 179);
+  list-style-type: none;
+
+}
+
+
+.nav-icon {
+  font-size    : 1.25rem;
+  width        : 50px;
+  padding-right: 0.5rem;
+  margin-right : 0.5rem;
+}
+
+.humb-strip {
+  border-bottom: 3px solid red;
+  min-width    : 30px;
+  min-height   : 2px;
+  margin-bottom: 3px;
+}
+
+.main-nav {
+  max-height      : calc(100vh - 90px);
+  background-color: $main-nav-bg;
+  color           : white;
+  padding-top     : 1.8rem;
+  z-index         : 5;
+
+  @media screen and (max-width:720px) {
+    padding-top: 5.5rem;
+  }
+
+
+  ul {
+
+
+    &.stations {
+      margin-top        : 10px;
+      border-top        : 1px solid $main-nav-hover;
+      padding-top       : 10px;
+      // max-height     : calc(100vh - 4.8rem - 5*(2.05rem) - 10px - 110px);
+      max-height        : calc(100vh - 530px);
+      overflow-y        : scroll;
+      overflow-x        : hidden;
+      padding-bottom    : 100px;
+      scrollbar-width   : thin;
+
+      @media screen and (max-width:760px) {
+        display: none;
+      }
+
+      &:hover {
+        transition: 0.3s;
+      }
+
+      &::-webkit-scrollbar {
+        width        : 12px;
+        // transition: all 0.6s ease-in-out;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: $main-nav-bg !important;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color      : #555;
+        border-radius         : 5px;
+        // -webkit-transition : all 3s ease-in-out;
+        transition            : all 2s ease-in;
+
+        &:hover {
+          background-color: $main-nav-hover;
+        }
+      }
+
+      .station-link {
+        text-overflow: ellipsis;
+
+        /* Needed to make it work */
+        overflow   : hidden;
+        white-space: nowrap;
+      }
+    }
+
+    li {
+      // shahar
+      // display: flex;
+
+
+      //
+      padding-top   : 0.4rem;
+      padding-bottom: 0.4rem;
+      padding-left  : 1rem;
+      width         : 97%;
+      margin        : auto;
+      transition    : background 0.6s;
+      align-items   : center;
+
+      &:hover {
+        color      : white;
+        font-weight: bold;
+        cursor     : pointer;
+      }
+
+      &.active {
+        background-color: $main-nav-hover;
+        border-radius   : 5px;
+      }
+
+
+
+      a {
+        width  : 90%;
+        display: inline-block;
+        padding: 0.5rem 0;
+
+        &.selected-station {
+          color      : white;
+          font-weight: bold;
+        }
+
+        .fa-heart::before {
+          color: unset;
+        }
+
+      }
+
+      &.nav-create:active {
+        background-color: $main-nav-hover;
+
+      }
+
+    }
+  }
+
+
+  @include for-mobile-layout {
+    position  : absolute;
+    width     : 210px;
+    left      : -210px;
+    transition: 0.3s;
+
+
+
+    &.active {
+      left   : 0px;
+      height : 90vh;
+      opacity: 0.97;
+
+      ul {
+        color: white;
+      }
+    }
+  }
+
+  @include for-narrow-layout {
+    position  : absolute;
+    width     : 210px;
+    left      : -210px;
+    transition: 0.3s;
+
+    &.active {
+      left     : 0px;
+      height   : 90vh;
+      //opacity: 0.85;
+
+      ul {
+        color: white;
+      }
+    }
+  }
+
+  @include for-normal-layout {
+    position: relative;
+    width   : 210px;
+    left    : 0;
+  }
+
+  @include for-wide-layout {
+    width: 270px;
+  }
+
+}
+
+.liked-songs-svg {
+  display   : inline-block;
+  width     : 20px;
+  object-fit: cover;
+}

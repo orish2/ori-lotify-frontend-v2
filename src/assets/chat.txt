@@ -1,0 +1,21 @@
+
+        Search handleChange-solution ori-eithan 
+
+        // ori-eithan
+        // const { keySearch } = this.state
+        // console.log('key search', keySearch);
+        // if (!keySearch || keySearch.length === 0)
+        //     return {}
+       //
+
+       form search - (e)=> e.prevDefault and then call to handleChange
+
+       ======================
+
+const API_KEY_1 = 'AIzaSyCcPSr5m43ZCmSIEcCOn-klalKLwfoJp1Y'; // EITHAN
+const API_KEY_2 = 'AIzaSyDv4FZEk6YGXCuTdAs7Ib_UErbyFh3eUUs'; // ORI
+const API_KEY_3 = 'AIzaSyBM9DnPair7lsEiaBpo0qeE55Ok8ncDkks';  // EITHAN
+const API_KEY_4 = 'AIzaSyBSOBAlxEfZUdAToFEQD1PsP0eAcLvYARE';  // Niv
+
+
+

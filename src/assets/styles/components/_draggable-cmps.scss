@@ -1,0 +1,157 @@
+.station-track-list {
+  width: 100%;
+}
+
+.list-headers {
+  flex-basis    : 50px;
+  align-items   : center;
+  color         : #888;
+  border-bottom : 1px solid #888;
+  margin-bottom : 10px;
+  // gap        : 10px;
+}
+
+.track-num-header,
+.track-num {
+  // padding-top   : 3px;
+  // padding-bottom: 3px;
+  width       : 50px;
+  padding-left: 5px;
+}
+
+.track-img-header,
+.track-img {
+  width: 90px;
+
+  @include for-mobile-layout {
+    width: 80px;
+
+    img {
+      height: 40px;
+      width : 40px;
+    }
+  }
+}
+
+.track-img {
+  &>img {
+    display   : block;
+    width     : 90%;
+    object-fit: cover;
+  }
+}
+
+.add-track-wrapper {
+  width: 105px;
+}
+
+.track-title-header,
+.track-title {
+  width    : 120px;
+  flex-grow: 1;
+
+  @include for-mobile-layout {
+    line-height  : 1.5rem;
+    height       : 3rem;
+    font-size    : 1rem;
+    overflow     : hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.actions-header,
+.duration-header,
+.track-duration {
+  text-align: center;
+}
+
+.track-title,
+.track-title-header {
+  padding-left: 1rem;
+}
+
+.duration-header,
+.track-duration,
+.likes,
+.likes-header,
+.track-actions,
+.actions-header {
+  width: 70px;
+
+  @include for-mobile-layout {
+    width: 50px;
+  }
+
+  @include for-narrow-layout {
+    width: 50px;
+  }
+
+  @include for-normal-layout {
+    width: 70px;
+  }
+}
+
+.likes {
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+
+  & img {
+    height: 16px;
+  }
+}
+
+.track-container {
+  width        : 100%;
+  align-items  : center;
+  margin-bottom: 5px;
+  border-radius: 4px;
+
+  @include for-mobile-layout {
+    margin-bottom: 15px;
+
+    .track-num,
+    .track-duration {
+      display: none;
+    }
+  }
+
+  @include for-normal-layout {
+
+    .track-num,
+    .track-duration {
+      display: block;
+    }
+  }
+
+  &:hover {
+    // filter: brightness(0.85);
+    background-color: rgb(54, 52, 52);
+    cursor          : pointer;
+
+    .likes img {
+      visibility: visible;
+      opacity   : 1;
+    }
+  }
+}
+
+.track-actions {
+  &>* {
+    opacity       : 1 !important;
+    // display    : flex;
+    // align-items: center;
+  }
+}
+
+.likes img.isnotLike {
+  visibility: hidden;
+  opacity   : 0;
+  transition: visibility 0.2s, opacity 0.1s linear;
+
+  // cursor    : default;
+  @include for-mobile-layout {
+    visibility: visible;
+    opacity   : 1;
+  }
+}

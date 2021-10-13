@@ -1,0 +1,37 @@
+// @import "components/track-list";
+.button-cell {
+  button {
+    padding         : 0;
+    height          : 50px;
+    width           : 50px;
+    color           : white;
+    background-color: rgba(255, 255, 255, 0);
+    border          : none;
+    opacity         : 0;
+  }
+
+}
+
+
+.queue-page-wrapper {
+  width: 100%;
+
+  // button {
+  //   background-color: rgb(18, 18, 18) !important;
+  //   color           : white !important;
+  // }
+}
+
+.queue-header {
+  margin-bottom: 1.5rem;
+}
+
+.queue-sub-header {
+  margin-bottom: 1rem;
+}
+
+.now-playing-container,
+.playing-next-queue-container,
+.queue-container {
+  margin-bottom: 1.5rem;
+}

@@ -1,0 +1,82 @@
+.user-pref {
+    display       : flex;
+    flex-direction: column;
+
+    header {
+        display        : flex;
+        flex-direction : column;
+        justify-content: center;
+        align-items    : center;
+    }
+
+    .artists {
+        display              : grid;
+        row-gap              : 20px;
+        column-gap           : 10px;
+        grid-template-columns: repeat(auto-fit, minmax(22vh, 1fr));
+
+        .circle-container {
+            text-align     : center;
+            display        : flex;
+            flex-direction : column;
+            justify-content: center;
+            align-items    : center;
+            text-align     : center;
+            gap            : 10px;
+            width          : 100%;
+
+            :hover {
+                cursor: pointer;
+            }
+
+            img:hover {
+                transform: scale(1.2, 1.2);
+            }
+
+            img {
+                object-fit   : contain;
+                height       : 20vh;
+                width        : 20vh;
+                border-radius: 50%;
+            }
+
+            i {
+                display: none;
+            }
+        }
+
+        .selected {
+            img {
+                position: relative;
+                filter  : grayscale(100%);
+                display : flex;
+            }
+
+            i {
+                display  : block;
+                position : absolute;
+                font-size: 3rem;
+                color    : white;
+            }
+        }
+    }
+
+    a {
+        display        : flex;
+        justify-content: center;
+        align-items    : center;
+        font-size      : 1.5rem;
+        position       : fixed;
+        bottom         : 20vh;
+        width          : 20vw;
+        left           : 40vw;
+        height         : 50px;
+        background     : rgb(57, 55, 185);
+        border-radius  : 25px;
+    }
+
+    @media screen and (max-width:720px) {
+        padding-top: 90px;
+    }
+
+}

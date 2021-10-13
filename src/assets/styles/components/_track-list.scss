@@ -1,0 +1,44 @@
+.song-container {
+    border-collapse: collapse;
+    border-spacing : 0;
+    width          : 100%;
+    border         : 1px solid transparent;
+    border-radius  : 4px;
+    height         : 56px;
+    position       : relative;
+
+    td {
+        vertical-align: middle;
+
+        &.song-num {
+            width       : 15px;
+            font-variant: tabular-nums;
+        }
+    }
+
+    .button-cell {
+        button {
+            padding         : 0;
+            height          : 50px;
+            width           : 50px;
+            color           : white;
+            background-color: rgba(255, 255, 255, 0);
+            border          : none;
+            opacity         : 0;
+        }
+
+    }
+
+    img {
+        height: 56px;
+    }
+}
+
+.song-container:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor          : pointer;
+
+    button {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,255 @@
+.home-page,
+.station-page {
+  h1 {
+    font-size     : 32px;
+    font-weight   : 700;
+    letter-spacing: -0.04em;
+    line-height   : 36px;
+    text-transform: none;
+    @media screen and (max-width:760px) {
+      text-align: center;
+    }
+  }
+
+  h3 {
+    font-size     : 24px;
+    font-weight   : 700;
+    letter-spacing: -0.04em;
+    line-height   : 28px;
+    text-transform: none;
+  }
+
+  h4 {
+    // font-size: 16px;
+    font-size: 1.2rem;
+    text-transform: capitalize;
+  }
+
+  .card-top {
+    padding: 3rem 25.6px;
+
+    @media screen and(max-width: 760px) {
+      // padding: 5rem 1.6rem;
+      padding: 6.3rem 1.6rem;
+    }
+
+
+  }
+
+  .card {
+    margin-bottom: 16px;
+    min-height   : 300px;
+    min-width    : 100%;
+
+    @media screen and(max-width: 960px) {
+      padding-left : 1.6rem;
+      padding-right: 1.6rem;
+    }
+
+    @include for-mobile-layout {
+      padding: 0rem 0rem;
+    }
+
+    .card-header {
+      padding-bottom: 16px;
+
+
+      @media screen and (max-width:760px) {
+        padding-bottom: 24px;
+
+        // optional::after
+        padding-left: 3px;
+      }
+    }
+  }
+
+  .card-top {
+    @media screen and (max-width: 550px) {
+      // padding       : 6.3rem 1rem;
+      padding       : 6.3rem 15px;
+      padding-bottom: 3rem;
+    }
+  }
+
+ 
+}
+
+.shadow {
+  display : block;
+  position: relative;
+}
+
+.shadow:before {
+  display   : block;
+  content   : "";
+  position  : absolute;
+  width     : 100%;
+  height    : 100%;
+  box-shadow: inset 0px 0px 3px 2px #121212;
+}
+
+.hero {
+  background-image     : url("../../img/hero-pic1.jpg");
+  width                : 100%;
+  height               : 55vh;
+  background-position-y: -86px;
+  background-size      : cover;
+  background-repeat    : no-repeat;
+  display              : flex;
+  justify-content      : center;
+  align-items          : center;
+  text-align           : center;
+
+  @media screen and (max-width: 760px) {
+    display: none;
+  }
+
+
+  h1 {
+    position   : absolute;
+    top        : 49px;
+    font-size  : 1.5rem;
+    font-family: "Quicksand-Bold";
+    top        : 22px;
+    //font-family   : "ConcertOne-Regular";
+  }
+
+  .logo {
+    //font-family: "Lobster", cursive;
+
+    >span {
+      color: #04c504;
+    }
+  }
+}
+
+.favorite-artists {
+  display              : grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows   : 1fr 1fr;
+  margin-bottom        : 20px;
+  gap                  : 10px;
+
+  @media screen and (max-width: 1100px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  // .station-container {
+  //   h4 {
+  //     font-size: 1rem;
+  //   }
+  // }
+
+  a {
+    width           : 100%;
+    display         : flex;
+    align-items     : center;
+    gap             : 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius   : 4px;
+    position        : relative;
+    transition      : background-color 0.3s ease;
+    height          : 80px;
+    overflow        : hidden;
+
+    @media screen and (max-width: 550px) {
+      height: 60px;
+
+      h4 {
+        font-size: 0.9rem;
+      }
+    }
+
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  img {
+    height                         : 100%;
+    width                          : 100%;
+    max-width                      : 100px;
+    object-fit                     : cover;
+    // @media screen and (max-width: 520px) {
+    //   width     : 60px;
+    // }
+  }
+
+  .img-container {
+    height          : 100%;
+    float           : left;
+    overflow        : hidden;
+    // ori- 11-10-21
+    // width        : 30%;
+    border-radius   : 2px;
+    margin-bottom   : 0;
+  }
+}
+
+.station-container {
+  .genre {
+    overflow               : hidden;
+    gap                    : 5px;
+    margin-bottom          : 20px;
+    width                  : 100%;
+    display                : grid;
+    grid-template-columns  : repeat(auto-fit, minmax((200px), 1fr));
+    //justify-content      : space-between;
+    float                  : left;
+
+    @media screen and (max-width: 760px) {
+      justify-items: center;
+      float        : unset;
+    }
+
+    @include for-mobile-layout {
+      grid-template-columns: repeat(auto-fit, minmax((150px), 1fr));
+    }
+
+    h4 {
+      font-weight: bolder;
+    }
+
+    p {
+      font-size: 0.8rem;
+    }
+
+    .station-preview {
+      width        : 200px;
+      margin-bottom: 16px;
+
+      @include for-mobile-layout {
+        // width    : 150px;
+        width: 180px;
+      }
+
+      &.liked-songs-link {
+        display    : block;
+        grid-column: 1 / span 2;
+        min-width  : 100%;
+        background : linear-gradient(149.46deg, #450af5, #8e8ee5 99.16%);
+      }
+
+      .img-container {
+        margin       : 0.5em 10px 0.5em 0;
+        overflow     : hidden;
+        border-radius: 2px;
+
+        img {
+          margin    : -64px -64px -64px -64px;
+          height    : 293px;
+          width     : 269px;
+          object-fit: cover;
+        }
+
+
+
+      }
+
+      h3 {
+        padding-top: 10px;
+      }
+    }
+  }
+}
