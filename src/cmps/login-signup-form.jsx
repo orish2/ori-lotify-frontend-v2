@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import FacebookLogin from 'react-facebook-login';
+// import FacebookLogin from 'react-facebook-login';
 import logo from '../assets/img/gramophone-svgrepo-com.svg'
 
 export class LoginSignupForm extends Component {

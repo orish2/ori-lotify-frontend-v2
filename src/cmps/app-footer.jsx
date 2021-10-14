@@ -216,8 +216,8 @@ class _AppFooter extends Component {
                             ref={this.ref}
                             playing={isPlaying}
                             url={`https://www.youtube.com/watch?v=${track.id}`}
-                            onDuration={this.onDuration}
-                            onProgress={this.onProgress}
+                            // onDuration={this.onDuration}
+                            // onProgress={this.onProgress}
                             width='0px'
                             heigth='0px'
                             volume={volume / 100}

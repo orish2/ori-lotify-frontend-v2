@@ -83,7 +83,7 @@ class _Signin extends React.Component {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <img style={{ height: "30px" }} src={enter} />
+              <img style={{ height: "30px" }} src={enter} alt="" />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in

@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import { MainLayout } from '../cmps/layout/MainLayout'
 import { TrackByUsers } from '../cmps/trackByUsers';
-import { eventBusService, showSuccessMsg } from '../services/event-bus.service'
+// import { eventBusService, showSuccessMsg } from '../services/event-bus.service'
 import { socketService } from '../services/socket.service'
-import { userService } from '../services/user.service';
+// import { userService } from '../services/user.service';
 import { connect } from 'react-redux'
 import { loadUsers, loadUser, updateUser } from '../store/user.actions';
 import Avatar from 'react-avatar';
 
 
-var _ = require('lodash');
+// var _ = require('lodash');
 class _Friends extends Component {
     state = {
         trackAndUsers: [],
@@ -34,20 +34,24 @@ class _Friends extends Component {
 
     loadUsers = (keySearch = '') => {
         if (!keySearch) {
-            let filterUsers = this.props.users.filter(user => {
-                if (user._id !== '615b1395706f019209666d5d' && user._id !== this.props.user?._id) {
-                    return user
-                }
-            })
-            this.setState({ users: filterUsers })
+
+            let filteredUsers = this.props.users.filter(user => user._id !== '6166bee501b9285d8e565f48' ||
+                user._id !== this.props.user?._id)
+            this.setState({ users: filteredUsers })
             return
-            //this.setState({ users: this.props.users })
         }
         else {
             let filterUsers = this.props.users.filter(user => user.username.toUpperCase().includes(keySearch.toUpperCase()) && user._id !== '615b1395706f019209666d5d' && user._id !== this.props.user._id)
             this.setState({ users: filterUsers })
         }
     }
+
+    // let filteredUsers = this.props.users.filter(user => {
+    //     if (user._id !== '615b1395706f019209666d5d' && user._id !== this.props.user?._id) {
+    //         return user
+    //     }
+    // })
+    //this.setState({ users: this.props.users })
 
     handleChange = async ({ target }) => {
         this.loadUsers(target.value)
@@ -75,8 +79,10 @@ class _Friends extends Component {
                 <MainLayout>
                     <h1>Friends Activity</h1>
                     <div className='friends-nav'>
-                        <a className={onFollow ? 'active' : ''} onClick={() => { this.setState({ onFollow: true }) }}>Follow</a>
-                        <a className={!onFollow ? 'active' : ''} onClick={() => { this.setState({ onFollow: false }) }}>Streaming now</a>
+                        <span className={onFollow ? 'active' : ''} onClick={() => { this.setState({ onFollow: true }) }}>Follow</span>
+                        <span className={!onFollow ? 'active' : ''} onClick={() => { this.setState({ onFollow: false }) }}>Streaming now</span>
+                        {/* <a className={onFollow ? 'active' : ''} onClick={() => { this.setState({ onFollow: true }) }}>Follow</a>
+                        <a className={!onFollow ? 'active' : ''} onClick={() => { this.setState({ onFollow: false }) }}>Streaming now</a> */}
                     </div>
 
 

@@ -4,8 +4,8 @@ import { setCurrTrack, setQueue, setCurrStation, setPlay } from '../store/statio
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from "react-router";
-import PlayCircleIcon from '@material-ui/icons/PlayCircleFilledWhite';
-import { ThemeProvider, createTheme } from '@material-ui/core'
+// import PlayCircleIcon from '@material-ui/icons/PlayCircleFilledWhite';
+// import { ThemeProvider, createTheme } from '@material-ui/core'
 
 class _StationPreview extends React.Component {
 
@@ -38,10 +38,10 @@ class _StationPreview extends React.Component {
                 <div className="img-card" onClick={() => this.navigateToStation(station)}>
                     <div className="square-ratio station-img-container">
                         {station.songs?.length > 0 && station.songs[0]?.imgUrl &&
-                            <img src={station.img ? station.img : `${station.songs[0].imgUrl}`} />
+                            <img src={station.img ? station.img : `${station.songs[0].imgUrl}`} alt="station cover" />
                         }
                         {!station.songs.length &&
-                            <img src={stationImg} />
+                            <img src={stationImg} alt="station cover" />
                         }
 
                         <div className="play-icon-container" onClick={(e) => {

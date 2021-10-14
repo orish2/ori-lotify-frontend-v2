@@ -1,6 +1,6 @@
 import { TrackList } from './trackList';
 import React from 'react'
-import { TrackPreview } from './track-preview';
+// import { TrackPreview } from './track-preview';
 
 export class SearchResultTrack extends React.Component {
     state = {
@@ -26,8 +26,8 @@ export class SearchResultTrack extends React.Component {
 
                 <div className='grid-search-result-container'>
                     <span className='title'>songs</span>
-                    {trackResult.length  &&
-                                <TrackList songs={trackResult.slice(0, 5)} playTrack={this.props.playTrack} onAddToNextQueue={this.props.onAddToNextQueue} />
+                    {trackResult.length &&
+                        <TrackList songs={trackResult.slice(0, 5)} playTrack={this.props.playTrack} onAddToNextQueue={this.props.onAddToNextQueue} />
                     }
 
                 </div>

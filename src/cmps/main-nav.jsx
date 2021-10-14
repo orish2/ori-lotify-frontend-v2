@@ -50,9 +50,13 @@ class _MainNav extends React.Component {
     // this.toggleMenu = this.toggleMenu.bind(this)
 
   }
-  componentDidUpdate(prevProps){
-    if(prevProps.stations?.length!==this.props.stations?.length){
-      this.setState(prevState=>({...prevState}))
+  getStationsWithoutLikedStation = (stations) => {
+    return stations.map(station => station.genre !== "likedTracks")
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.stations?.length !== this.props.stations?.length) {
+      this.setState(prevState => ({ ...prevState }))
     }
   }
 
@@ -69,9 +73,13 @@ class _MainNav extends React.Component {
   toggleMenu = async (newIsMenuOpen) => {
     this.setState({ isMenuOpen: newIsMenuOpen })
   }
+  handleCreate = () => {
+    eventBusService.emit("create-playlist")
 
+  }
   render() {
-    const { stations } = this.props
+    // const { stations } = this.props
+    const stationsToRender = this.getStationsWithoutLikedStation(this.props.stations)
     const { activLink, links, selectedStationId, isMenuOpen } = this.state
     if (!links) {
       return <div>loading.</div>
@@ -110,23 +118,26 @@ class _MainNav extends React.Component {
                   {link.name}</NavLink>
               </li>
             })}
-            <li onClick={() => { eventBusService.emit("create-playlist") }} className="nav-create">
-              <a>
+            <li onClick={this.handleCreate} >
+              <div className="nav-create">
                 <span className="nav-icon fas fa-plus-square"></span>
                 Create Playlist
-              </a>
+              </div>
             </li>
           </ul>
           <ul className="stations">
             {
-              stations.map(station => {
-                if(station.genre!=="likedTracks")
+
+              stationsToRender.map(station => {
+                // if (station.genre !== "likedTracks")
                 return <li key={station._id} onClick={() => this.setSelectedStationId(station._id)}>
                   <NavLink to={`/station/${station._id}`}
                     className={selectedStationId === station._id ? 'station-link selected-station' : 'station-link'}>
                     {station.name}
                   </NavLink></li>
+
               })
+
             }
 
           </ul>

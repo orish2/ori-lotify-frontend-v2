@@ -45,27 +45,6 @@ class _Stations extends Component {
       </div>
     )
 
-
-    return (
-      <div className="stations-wrapper">
-        <MainLayout>
-          <header>
-            <h1>Playlists</h1>
-          </header>
-          <section className='stationss-container card-grid'>
-
-            {stations.map((station, idx) => {
-              return idx === 0 ?
-                <LikedSongsPreview key={station._id} station={station} /> :
-                <StationPreview key={station._id} station={station} />
-
-            })
-            }
-          </section>
-          {/* </div> */}
-        </MainLayout >
-      </div>
-    )
   }
 }
 

@@ -29,7 +29,9 @@ export class UserMsg extends React.Component {
     if (!this.state.msg) return <></>
     const msgClass = this.state.msg.type || ''
     return (
-      <div id={`toast`} className={`show  ${msgClass}`}><div id="img"><img style={{ height: '20px', width: "20px" }} src={ringing} /></div><div id="desc"> {this.state.msg.txt}</div></div>
+      <div id={`toast`} className={`show  ${msgClass}`}><div id="img">
+        <img style={{ height: '20px', width: "20px" }} src={ringing} alt="" />
+      </div><div id="desc"> {this.state.msg.txt}</div></div>
       //<section className={'user-msg ' + msgClass}>
       //  <button onClick={() => {
       //    this.setState({ msg: null })

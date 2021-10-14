@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { userService } from '../services/user.service';
+// import { userService } from '../services/user.service';
 import { connect } from 'react-redux'
-import { loadUsers, updateUser } from '../store/user.actions';
+// import { loadUsers, updateUser } from '../store/user.actions';
 import { loadUser } from '../store/user.actions';
 import { PrackByUserPreview } from './trackByUser-preview';
 //import streaming from '../assets/img/icon50.png'
@@ -17,8 +17,10 @@ class _TrackByUsers extends Component {
         let trackAndUser = this.props.trackAndUsers?.filter(traclANdUser => {
             if (traclANdUser.user._id === currUserId)
                 return traclANdUser.track
+            return undefined
         })
-        if (!trackAndUser?.length)
+        // if (!trackAndUser?.length)
+        if (!trackAndUser || trackAndUser.length === 0)
             trackAndUser = false
 
         else trackAndUser = trackAndUser[0]

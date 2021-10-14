@@ -5,7 +5,7 @@ import { Menu, MenuItem, MenuButton, SubMenu } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/transitions/slide.css';
 import { eventBusService, showSuccessMsg, showErrorMsg } from '../services/event-bus.service';
-import { loadStations, addToNextQueue, setCurrTrack, setQueue } from '../store/station.actions.js';
+import { addToNextQueue, setCurrTrack, setQueue } from '../store/station.actions.js';
 import { addLikeToTrack, loadUser, removeLikeFromTrack } from '../store/user.actions';
 import heartNotChecked from '../assets/img/heart-regular.svg';
 import isPlying from '../assets/img/isPlaying.gif'
@@ -69,15 +69,15 @@ class _TrackPreview extends Component {
             seconds = parseInt(seconds_split[0]);
         }
         var str = "";
-        if (hours != 0) { str += hours + ":"; }
-        if (minutes == 0) { str += "00" + ":"; }
-        else if (minutes < 10) { str += "0" + minutes + ":"; }
-        else if (minutes > 10) { str += minutes + ":"; }
-        else if (minutes == 0) { str += "00:" }
+        if (hours !== 0) { str += hours + ":" }
+        if (minutes === 0) { str += `00:` }  // '00' + ':'
+        else if (minutes < 10) { str += `0${minutes}:` } //    "0" + minutes + ":"
+        else if (minutes > 10) { str += minutes + ":" }
+        else if (minutes === 0) { str += "00:" }
         if (seconds > 0 && seconds < 10) { str += "0" + seconds; }
         else if (seconds < 10) { str += "0" + seconds; }
         else if (seconds > 10) { str += seconds; }
-        else if (seconds == 0) { str += "00" }
+        else if (seconds === 0) { str += "00" }
         return str;
     }
 
@@ -108,7 +108,7 @@ class _TrackPreview extends Component {
     }
 
     playTrack = async (track, idx) => {
-        
+
         const { currStation, queue, currTrack, playNextQueue } = this.props
         let songs
         if (currStation) {//only if clicking on station details not from queue!
@@ -147,13 +147,13 @@ class _TrackPreview extends Component {
     }
 
     render() {
-        const { track, idx, currStation, stations, user } = this.props
+        const { track, idx, currStation, stations } = this.props
         return (
             // onClick={this.playTrack(track, idx)}
             //button-cell
             <div className="track-container flex" onClick={() => this.playTrack(track, idx)}>
                 {this.props.currTrack && this.props.currTrack?.id === track.id && this.props.isPlaying &&
-                    <div className="track-num"> < img className='isPlaying' src={isPlying} /></div>
+                    <div className="track-num"> < img className='isPlaying' src={isPlying} alt="player symbol" /></div>
                 }
                 {(!this.props.currTrack || this.props.currTrack.id !== track.id || !this.props.isPlaying) &&
                     <div className="track-num">{idx + 1}</div>}
@@ -163,10 +163,15 @@ class _TrackPreview extends Component {
                 {!this.props?.isOnDeatils && <div className='likes'>
                     {
                         //this.state.isLike && <img className='islike' src={heartChecked} onClick={(ev) => { this.toggleLike(ev) }} />
-                        this.state.isLike && <span className='isLike' onClick={(ev) => { this.toggleLike(ev) }} className="fas fa-heart"></span>
+                        this.state.isLike && <span className='isLike fas fa-heart'
+                            onClick={this.toggleLike.bind(this)}></span>
+                        // onClick={(ev) => { this.toggleLike(ev) }} ></span>
+                        //  className="fas fa-heart"
                     }
                     {
-                        !this.state.isLike && <img className='isnotLike' src={heartNotChecked} onClick={(ev) => { this.toggleLike(ev) }} />
+                        !this.state.isLike && <img alt="" className='isnotLike' src={heartNotChecked}
+                            onClick={this.toggleLike.bind(this)} />
+                        //  onClick={(ev) => { this.toggleLike(ev) }} />
                     }
                 </div>}
                 {

@@ -150,7 +150,7 @@ class _StationDetails extends Component {
             this.props.removeLikeFromTrack(this.state.station._id, stationOrTrack)
             showErrorMsg('Removed from Your Library')
         }
-        const { stationId } = this.state
+        // const { stationId } = this.state
         this.loadStation()
 
     }
@@ -170,17 +170,17 @@ class _StationDetails extends Component {
 
     render() {
         const { station, isFindMore } = this.state
-        const { user } = this.props
+        // const { user } = this.props
         const { stationId } = this.props.match.params;
         if (!station) return <Loading />
         return (
             <section className='station-details'>
                 <div className="station-head flex">
                     {station.songs?.length > 0 &&
-                        <img src={station.img ? station.img : `${station.songs[0].imgUrl}`} />
+                        <img src={station.img ? station.img : `${station.songs[0].imgUrl}`} alt="" />
                     }
                     {!station.songs.length &&
-                        <img src={stationImg} />
+                        <img src={stationImg} alt="" />
                     }
                     <div className="title-details">
                         <p>Playlist</p>
@@ -198,11 +198,12 @@ class _StationDetails extends Component {
                     </button>
 
                     {
-                        (stationId !== 'likedTracks' && this.state.isLike) && <span className='isLike' style={{ fontSize: "32px" }} onClick={(ev) => { this.toggleLike(ev, 'station') }} className="fas fa-heart"></span>
+                        (stationId !== 'likedTracks' && this.state.isLike) && <span className='isLike fas fa-heart' style={{ fontSize: "32px" }} onClick={(ev) => { this.toggleLike(ev, 'station') }} ></span>
                     }
                     {
                         (stationId !== 'likedTracks' && !this.state.isLike)
-                        && <img className='isnotLike' src={heartNotChecked} onClick={(ev) => { this.toggleLike(ev, 'station') }} />
+                        && <img alt="" className='isnotLike' src={heartNotChecked} onClick={(ev) => { this.toggleLike(ev, 'station') }}
+                        />
                     }
                 </div>
                 <MainLayout>

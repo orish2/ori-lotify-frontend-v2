@@ -147,6 +147,10 @@
 
   ul {
 
+    .nav-create {
+      padding-top   : 0.5rem;
+      padding-bottom: 0.5rem;
+    }
 
     &.stations {
       margin-top        : 10px;
@@ -197,11 +201,8 @@
     }
 
     li {
-      // shahar
-      // display: flex;
 
 
-      //
       padding-top   : 0.4rem;
       padding-bottom: 0.4rem;
       padding-left  : 1rem;

@@ -14,10 +14,12 @@ class _PrackByUserPreview extends Component {
             await this.props.setQueue(songs, currStation?._id)
         }
     }
-
+    handlePlayTrack = async (data) => {
+        await this.playTrack(data.track, data.idx)
+    }
     render() {
         return (
-            <div className={this.props.track? 'user-preview order flex' :'user-preview  flex'}>
+            <div className={this.props.track ? 'user-preview order flex' : 'user-preview  flex'}>
                 <div className='avatar'>
                     <Avatar src={this.props.usersImgs.find(imgObj => this.props.currUserId === imgObj.id)?.url} size="70" round={true} />
                 </div>
@@ -26,12 +28,13 @@ class _PrackByUserPreview extends Component {
 
 
                 {this.props.track &&
-                    <div className={"track"} onClick={() => { this.playTrack(this.props.track.track, 0) }}>
-                        <img src={musicLa} />
+                    <div className={"track"} onClick={this.handlePlayTrack.bind(this, { track: this.props.track.tack, idx: 0 })}>
+                        {/* < div className={"track"} onClick={() => { this.playTrack(this.props.track.track, 0) }}> */}
+                        <img src={musicLa} alt="" />
                         <div><p> {this.props.track.track.title}</p></div>
                     </div>
                 }
-          
+
                 {!this.props.track &&
                     <div className={"offline"}>
                         <div>offline</div>
@@ -39,7 +42,9 @@ class _PrackByUserPreview extends Component {
                 }
                 {this.props.track &&
                     <>
-                        <img className='play' onClick={() => { this.playTrack(this.props.track.track, 0) }} src={play} />
+                        <img className='play' alt="" src={play}
+                            onClick={this.handlePlayTrack.bind(this, { track: this.props.track.tack, idx: 0 })} />
+                        {/* onClick={() => { this.playTrack(this.props.track.track, 0) }} src={play} /> */}
                         <span className="fas fa-volume-up"></span>
                     </>
                 }
