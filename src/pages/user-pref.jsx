@@ -10,9 +10,10 @@ import logo from '../assets/img/gramophone.png'
 
 class _UserPref extends Component {
     state = {
-        artists: [{ artist: 'ed sheeran', img: 'https://yt3.ggpht.com/2uiMtw7drxpcP4J7s61C0x1cK_fdX0Fp_RJ9t9l-RVnal24xyqSLPhIkWYN2I8QneubJAA8J_Fo=s800-c-k-c0xffffffff-no-rj-mo' },
-        { artist: 'billie eilish', img: 'https://yt3.ggpht.com/ytc/AKedOLTAirqzFYUbcrpr8K0Bh8iDCZvBopbEb3K9klVNBA=s800-c-k-c0xffffffff-no-rj-mo' }
-        ]
+        artists: [],
+        // artists: [{ artist: 'ed sheeran', img: 'https://yt3.ggpht.com/2uiMtw7drxpcP4J7s61C0x1cK_fdX0Fp_RJ9t9l-RVnal24xyqSLPhIkWYN2I8QneubJAA8J_Fo=s800-c-k-c0xffffffff-no-rj-mo' },
+        // { artist: 'billie eilish', img: 'https://yt3.ggpht.com/ytc/AKedOLTAirqzFYUbcrpr8K0Bh8iDCZvBopbEb3K9klVNBA=s800-c-k-c0xffffffff-no-rj-mo' }
+        // ]
     }
 
     componentDidMount() {
@@ -24,9 +25,10 @@ class _UserPref extends Component {
         if (target.parentElement.classList.contains('selected')) return
         target.parentElement.classList.add('selected')
         const img = target.parentElement.children[0].src;
+
         this.setState((prevState) => ({ artists: [...prevState.artists, { artist, img }] }), () => {
-            if (this.state.artists.length >= 6) {
-                this.props.setUserPref([...this.state.artists, { artist, img }])
+            if (this.state.artists.length === 4) {
+                this.props.setUserPref([...this.state.artists])
             }
         })
         // this.props.loadUser()
@@ -36,13 +38,17 @@ class _UserPref extends Component {
     render() {
         const { stations, user } = this.props
         if (!stations || !user) return <h1>loading...</h1>
-        if (user.userPref?.length >= 5) {
+        if (user.userPref.length === 4) {
+            console.log('here 4 prefs');
             return <Redirect to='/home' />
+        }
+        else {
+            console.log('user prefs are' + user.userPref.length);
         }
         return (
             <div className="user-pref">
                 <header>
-                    <h1>Choose at least 4 of your favorite artists</h1>
+                    <h1>Choose 4 of your favorite artists</h1>
                     <p>Improve your experience</p>
                 </header>
                 <MainLayout>

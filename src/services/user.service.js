@@ -58,7 +58,8 @@ async function updateUser(user) {
         return user
     }
     else {
-        let updatedUser = await axios.put(`${URL}/user/${user._id}`, user).data
+        let updatedUser = await axios.put(`${URL}/user/${user._id}`, user)
+        updatedUser = updatedUser.data
         _saveUserToStorage(updatedUser)
         return updatedUser
 
@@ -172,6 +173,7 @@ async function setUserPref(userPref) {
     if (user.username !== "guest") {
         updateUser(user)
     }
+    console.log('guestush user');
     _saveUserToStorage(user)
     // let user = await axios.get(`${URL}/user/${user._id}`)
     return user

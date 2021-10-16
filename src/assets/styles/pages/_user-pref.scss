@@ -7,6 +7,12 @@
         flex-direction : column;
         justify-content: center;
         align-items    : center;
+        margin-top     : 3rem;
+
+        @media screen and (max-width: 760px) {
+            margin-top   : unset;
+            margin-bottom: 3rem;
+        }
     }
 
     .artists {
@@ -29,8 +35,10 @@
                 cursor: pointer;
             }
 
-            img:hover {
-                transform: scale(1.2, 1.2);
+            &:not(.selected) {
+                img:hover {
+                    transform: scale(1.2, 1.2);
+                }
             }
 
             img {
@@ -47,9 +55,11 @@
 
         .selected {
             img {
-                position: relative;
-                filter  : grayscale(100%);
-                display : flex;
+                position : relative;
+                filter   : grayscale(90%);
+                transform: scale(1.2);
+                display  : flex;
+
             }
 
             i {
@@ -75,7 +85,7 @@
         border-radius  : 25px;
     }
 
-    @media screen and (max-width:720px) {
+    @media screen and (max-width:760px) {
         padding-top: 90px;
     }
 
