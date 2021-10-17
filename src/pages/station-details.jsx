@@ -13,6 +13,7 @@ import { stationServiceNew } from '../services/station.service.js';
 import { youtubeApiService } from '../services/youtubeApi.service.js';
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js';
 import { Loading } from '../cmps/Loading.jsx';
+import { userService } from '../services/user.service.js';
 
 class _StationDetails extends Component {
     state = {
@@ -45,10 +46,10 @@ class _StationDetails extends Component {
         if (stationId !== this.state.station?._id && stationId !== this.state.station?.genre) {
             await this.loadStation()
             let user = await this.props.user
-            if (!user) {
-                await this.props.loadUser();
-                user = await this.props.user
-            }
+            // if (!user) {
+            //     await this.props.loadUser();
+            //     user = await this.props.user
+            // }
             if (this.state.station) {
                 if (user.likedStations.includes(this.state.station._id)) {
                     this.setState({ isLike: true })
@@ -68,16 +69,16 @@ class _StationDetails extends Component {
             if (!station)
                 if (stationId.length === 24) {
                     station = await stationServiceNew.getStationById(stationId)
-                    console.log('got by id', station);
+                    // console.log('got by id', station);
                 } else {
                     station = await stationServiceNew.getStationByGenre(stationId)
-                    console.log('got by genre', station);
+                    // console.log('got by genre', station);
                 }
             if (!station) {
                 station = await youtubeApiService.getStationByTag(stationId)
                 if (station)
                     station = station[0]
-                console.log('got from api', station);
+                // console.log('got from api', station);
             }
             let user;
             if (stationId === 'likedTracks') {
@@ -86,14 +87,17 @@ class _StationDetails extends Component {
                     await this.props.loadUser();
                     user = await this.props.user
                 }
-                if (user.likedTracks) {
-                    station.songs = [...user.likedTracks]
-                }
-                else {
-                    console.log('no liked tracks');
-                }
+                station.songs = [...user.likedTracks]
+                // if (user.username !== 'guest') {
+                //     station.songs = [...user.likedTracks]
+                // }
+                // else {
+                //     console.log('user songs', user.likedTracks);
+                //     station.songs = await userService.getGuestLiktedSongs()
+                // }
             }
             if (station) {
+                // console.log('station is', station);
                 this.setState({ station, stationId: station._id, songs: station.songs })
             }
             else this.setState({ station: [] })
@@ -169,9 +173,12 @@ class _StationDetails extends Component {
     }
 
     render() {
-        const { station, isFindMore } = this.state
-        // const { user } = this.props
+        const { station, isFindMore } = this.state;
+        console.log('station from details render', station);
+        // const { user } = this.props;
+        // let songs;
         const { stationId } = this.props.match.params;
+        // if (stationId === 'likedTracks')
         if (!station) return <Loading />
         return (
             <section className='station-details'>

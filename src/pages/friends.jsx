@@ -3,10 +3,10 @@ import { MainLayout } from '../cmps/layout/MainLayout'
 import { TrackByUsers } from '../cmps/trackByUsers';
 // import { eventBusService, showSuccessMsg } from '../services/event-bus.service'
 import { socketService } from '../services/socket.service'
-// import { userService } from '../services/user.service';
 import { connect } from 'react-redux'
 import { loadUsers, loadUser, updateUser } from '../store/user.actions';
 import Avatar from 'react-avatar';
+import { utilService } from '../services/util.service';
 
 
 // var _ = require('lodash');
@@ -15,7 +15,7 @@ class _Friends extends Component {
         trackAndUsers: [],
         usersImgs: [],
         users: [],
-        onFollow: true
+        onFollow: true,
     }
     async componentDidMount() {
 
@@ -33,15 +33,16 @@ class _Friends extends Component {
     }
 
     loadUsers = (keySearch = '') => {
+        // console.log('this users', this.props.users);
         if (!keySearch) {
 
-            let filteredUsers = this.props.users.filter(user => user._id !== '6166bee501b9285d8e565f48' ||
+            let filteredUsers = this.props.users.filter(user => user.username !== 'guest' ||
                 user._id !== this.props.user?._id)
             this.setState({ users: filteredUsers })
             return
         }
         else {
-            let filterUsers = this.props.users.filter(user => user.username.toUpperCase().includes(keySearch.toUpperCase()) && user._id !== '615b1395706f019209666d5d' && user._id !== this.props.user._id)
+            let filterUsers = this.props.users.filter(user => user.username.toUpperCase().includes(keySearch.toUpperCase()) && user.username !== 'guest' && user._id !== this.props.user._id)
             this.setState({ users: filterUsers })
         }
     }
@@ -53,7 +54,7 @@ class _Friends extends Component {
     // })
     //this.setState({ users: this.props.users })
 
-    handleChange = async ({ target }) => {
+    handleChange = ({ target }) => {
         this.loadUsers(target.value)
     }
     onFollow = async (userIdToFollow, isFollow) => {
@@ -69,6 +70,10 @@ class _Friends extends Component {
         await this.props.updateUser(user)
     }
 
+    setFollow(value) {
+        this.setState({ onFollow: value })
+    }
+
     render() {
         const trackAndUsers = this.props.trackAndUsers
         const { user } = this.props
@@ -79,8 +84,8 @@ class _Friends extends Component {
                 <MainLayout>
                     <h1>Friends Activity</h1>
                     <div className='friends-nav'>
-                        <span className={onFollow ? 'active' : ''} onClick={() => { this.setState({ onFollow: true }) }}>Follow</span>
-                        <span className={!onFollow ? 'active' : ''} onClick={() => { this.setState({ onFollow: false }) }}>Streaming now</span>
+                        <span className={onFollow ? 'active friends-sub-nav' : 'friends-sub-nav'} onClick={this.setFollow.bind(this, true)}>Follow</span>
+                        <span className={!onFollow ? 'active friends-sub-nav' : 'friends-sub-nav'} onClick={this.setFollow.bind(this, false)}>Streaming now</span>
                         {/* <a className={onFollow ? 'active' : ''} onClick={() => { this.setState({ onFollow: true }) }}>Follow</a>
                         <a className={!onFollow ? 'active' : ''} onClick={() => { this.setState({ onFollow: false }) }}>Streaming now</a> */}
                     </div>
@@ -93,7 +98,7 @@ class _Friends extends Component {
                                 <div className='users-table'>
                                     {users &&
                                         users.map((currUser, idx) => {
-                                            return <div className='friend-following-preview flex'>
+                                            return <div key={utilService.makeId()} className='friend-following-preview flex'>
                                                 <div>
                                                     <Avatar style={{}} src={this.state.usersImgs.find(imgObj => currUser._id === imgObj.id)?.url} size="70" round={true} />
                                                     <span>

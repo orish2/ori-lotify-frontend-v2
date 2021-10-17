@@ -1,4 +1,4 @@
-import { httpService } from './http.service.js'
+// import { httpService } from './http.service.js'
 import Axios from 'axios'
 import storageService from './storage.service.js';
 import { userService } from './user.service.js';
@@ -40,13 +40,29 @@ async function getHot() {
 
 async function getStationsByUser() {
     const user = await userService.getLoggedinUser()
+    // const res = await axios.get(`${BASE_URL}/station/${user._id}`)
+    // console.log('user from station service', user._id);
+
+    if (user.username === 'guest') {
+        let stations = []
+        // console.log('user LikedStations', user.likedStations);
+        user.likedStations.forEach(async stationId => {
+            const station = await getStationById(stationId)
+            // console.log('station isssss', station);
+            stations.push(station)
+        })
+        const likeStation = await getStationByGenre('likedTracks')
+        stations.push(likeStation)
+        return stations
+    }
     const res = await axios.get(`${BASE_URL}/station/${user._id}`)
     return res.data
 }
 
 async function getStationById(stationId) {
+    // console.log(`${BASE_URL}/${stationId}`);
     const res = await axios.get(`${BASE_URL}/${stationId}`)
-    console.log("🚀 ~ file: station.service.js ~ line 51 ~ getStationById ~ res.data", res.data)
+    // console.log("🚀 ~ file: station.service.js ~ line 51 ~ getStationById ~ res.data", res.data)
     return res.data
 }
 

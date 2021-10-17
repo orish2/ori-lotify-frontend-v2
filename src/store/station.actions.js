@@ -1,16 +1,23 @@
 import { guestService } from "../services/async-storage.service dont delete.js";
 import { stationServiceNew } from "../services/station.service.js";
 import { userService } from "../services/user.service.js";
-import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js';
-import { AddToRecentlyPlayed } from "./user.actions.js";
+import { showSuccessMsg } from '../services/event-bus.service.js';
+// import { AddToRecentlyPlayed } from "./user.actions.js";
 
 export function loadStations() {
+    console.log('loading stations');
     return async (dispatch) => {
         try {
             let stations = await stationServiceNew.getStationsByUser()
+            console.log('stations length', stations.length);
             let guestStations = await guestService.query()
-            stations = stations.concat(guestStations)
-            console.log('station loaded', stations);
+            console.log('guest stations', guestStations);
+            if (guestStations && guestStations.length)
+                stations = [...guestStations, ...stations]
+
+            // stations = stations.concat(guestStations)
+            // const allStations = stations.concat()
+            console.log('stationss loaded', stations);
             dispatch({
                 type: 'SET_STATIONS',
                 stations

@@ -8,6 +8,15 @@ import { withRouter } from "react-router";
 
 class _LikedSongsPreview extends React.Component {
 
+    state = {
+        songs: []
+    }
+    async componentDidMount() {
+        await this.props.loadUser();
+        let user = this.props.user
+        this.setState(ps => ({ ...ps, songs: user.likedTracks }))
+        // console.log('user from liked songs', user);
+    }
     playRandTrack = async () => {
         const { station, currStation } = this.props
         let songs;
@@ -16,14 +25,14 @@ class _LikedSongsPreview extends React.Component {
             let user = await this.props.user
             if (!user) {
                 await this.props.loadUser();
-                user = await this.props.user
+                user = await this.props.user;
             }
-            if (user.likedTracks) {
-                songs = [...user.likedTracks]
-            }
-            else {
-                console.log('no liked tracks');
-            }
+            songs = [...user.likedTracks]
+            // if (user.likedTracks) {
+            // }
+            // else {
+            //     console.log('no liked tracks');
+            // }
             const idx = Math.floor(Math.random() * (songs.length))
             const track = songs[idx]
             await this.props.setCurrTrack(track, idx);
@@ -41,15 +50,16 @@ class _LikedSongsPreview extends React.Component {
     }
     render() {
         const { station, currStation, isPlaying } = this.props
+        const { songs } = this.state
         if (!station) return <div> not found</div>
         return (
             <div className="station-preview liked-songs-link" onClick={() => this.navigateToStation(station.genre)}>
                 <div className="station-name-header">
                     <h3>{station.name}</h3>
-                    <span>{`${station.songs.length} liked songs`}</span>
+                    <span>{`${songs.length} liked songs`}</span>
                 </div>
                 <p className="station-desc">
-                    {station.songs.reduce((songStr, song) => {
+                    {songs.reduce((songStr, song) => {
                         songStr += song.title
                         return songStr;
                     }, '')}

@@ -12,10 +12,9 @@ function removeFromStorage(key) {
     localStorage.removeItem(key)
 }
 
-
-export default {
+const storageService = {
     loadFromStorage,
     saveToStorage,
     removeFromStorage
-
 }
+export default storageService

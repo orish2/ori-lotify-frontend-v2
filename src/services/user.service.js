@@ -1,8 +1,8 @@
 import storageService from '../services/storage.service'
-import { utilService } from './util.service.js'
-import { gPlaylists } from "./data";
+// import { utilService } from './util.service.js'
+// import { gPlaylists } from "./data";
 import Axios from 'axios'
-import { update } from 'lodash';
+// import { update } from 'lodash';
 import { stationServiceNew } from './station.service';
 import { socketService } from '../services/socket.service'
 
@@ -22,7 +22,8 @@ export const userService = {
     signup,
     login,
     logout,
-    getUsers
+    getUsers,
+    getGuestLiktedSongs,
 }
 const STORAGE_KEY = "user"
 const URL = (process.env.NODE_ENV === 'production') ?
@@ -51,7 +52,12 @@ async function logout() {
     return removed
 }
 
+async function getGuestLiktedSongs() {
+    const guestUser = await getLoggedinUser()
+    console.log('likedTracks of guest', guestUser.likedTracks);
+    return guestUser.likedTracks
 
+}
 async function updateUser(user) {
     if (user.username === 'guest') {
         _saveUserToStorage(user)

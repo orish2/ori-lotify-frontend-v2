@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 import logo from '../assets/img/gramophone-svgrepo-com.svg'
 import { eventBusService } from '../services/event-bus.service'
+import { utilService } from '../services/util.service'
 
 class _MainNav extends React.Component {
   constructor(props) {
@@ -111,14 +112,14 @@ class _MainNav extends React.Component {
             {/* {links.map(link => {
               return <li key={link.id} onClick={() => this.handleClick(link.id)} className={link.id === activLink ? 'active' : ''}> */}
             {links.map(link => {
-              return <li key={link.id} onClick={this.handleClick.bind(this, link.id)} className={link.id === activLink ? 'active' : ''}>
+              return <li key={utilService.makeId()} onClick={this.handleClick.bind(this, link.id)} className={link.id === activLink ? 'active' : ''}>
 
                 <NavLink to={link.to}>
                   <span className={`nav-icon fas ${link.fa}`}></span>
                   {link.name}</NavLink>
               </li>
             })}
-            <li onClick={this.handleCreate} >
+            <li onClick={this.handleCreate} key={utilService.makeId()}>
               <div className="nav-create">
                 <span className="nav-icon fas fa-plus-square"></span>
                 Create Playlist
@@ -130,7 +131,7 @@ class _MainNav extends React.Component {
 
               stationsToRender.map(station => {
                 // if (station.genre !== "likedTracks")
-                return <li key={station._id} onClick={() => this.setSelectedStationId(station._id)}>
+                return <li key={utilService.makeId()} onClick={() => this.setSelectedStationId(station._id)}>
                   <NavLink to={`/station/${station._id}`}
                     className={selectedStationId === station._id ? 'station-link selected-station' : 'station-link'}>
                     {station.name}

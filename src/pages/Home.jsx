@@ -11,13 +11,24 @@ import { Loading } from '../cmps/Loading.jsx';
 import { UserProfile } from '../cmps/profile.jsx';
 
 class _Home extends Component {
-    state = {
-        goodDayStations: [],
-        hotStations: [],
-        likedStations: '',
-        recentlyPlayedStations: '',
-        numOfPreviews: 5
+    constructor(props) {
+        super(props);
+        this.state = {
+            goodDayStations: [],
+            hotStations: [],
+            likedStations: '',
+            recentlyPlayedStations: [],
+            numOfPreviews: 5
+        }
+        this._isMounted = false;
     }
+    // state = {
+    //     goodDayStations: [],
+    //     hotStations: [],
+    //     likedStations: '',
+    //     recentlyPlayedStations: '',
+    //     numOfPreviews: 5
+    // }
 
     resizer
     handleRisize = (entries) => {
@@ -47,21 +58,34 @@ class _Home extends Component {
 
     }
     async componentDidMount() {
+        this._isMounted = true
+        // console.log('this. maout??', this._isMounted);
+        // if (this._isMounted) {
         await this.props.loadUser();
         await this.props.loadStations();
-        await this.getLikedStation()
+        if (this._isMounted)
+            await this.getLikedStation()
         const goodDayStations = await stationServiceNew.getGoodDay()
         const hotStations = await stationServiceNew.getHot()
-        this.setState({ goodDayStations, hotStations })
+        if (this._isMounted)
+            this.setState({ goodDayStations, hotStations })
         this.resizer = new ResizeObserver(this.handleRisize)
         this.resizer.observe(document.querySelector('.main-app'))
+        // }
+    }
+
+    componentWillUnmount() {
+        console.log('home is unmounting');
+        this._isMounted = false
     }
 
     async componentDidUpdate(prevProps) {
+        console.log('home updated');
         if (prevProps.user?._id !== this.props.user?._id) {
             //await this.props.loadUser();
             await this.props.loadStations();
-            await this.getLikedStation()
+            if (this._isMounted)
+                await this.getLikedStation()
         }
     }
 
@@ -78,7 +102,8 @@ class _Home extends Component {
         }
     }
     getLikedStation = async () => {
-        console.log(this.props.user);
+        // console.log(this.props.user);
+        // if (!this._isMounted) return
         let unresolvedPromisesLike = await this.props.user.likedStations.map((stationId => {
             return stationServiceNew.getStationById(stationId);
         }
@@ -90,6 +115,7 @@ class _Home extends Component {
         let a = await Promise.all(unresolvedPromisesLike)
         let b = await Promise.all(unresolvedPromisesStation)
         const results = await Promise.all([a, b]);
+        if (!this._isMounted) return
         this.setState({ likedStations: results[0], recentlyPlayedStations: results[1] })
         //this.props.user.likedStations.map((station => <StationPreview key={station._id} station={station} />))
     }
@@ -97,7 +123,10 @@ class _Home extends Component {
     render() {
         let { stations, user } = this.props
         stations = stations.filter(station => station.genre !== 'likedTracks')
-        const { likedStations, numOfPreviews, recentlyPlayedStations, goodDayStations, hotStations } = this.state
+        const { likedStations, numOfPreviews, goodDayStations, hotStations } = this.state
+        let { recentlyPlayedStations } = this.state
+        console.log('recently', recentlyPlayedStations);
+        recentlyPlayedStations = recentlyPlayedStations.filter(station => station.genre !== 'likedTracks')
         // console.log(goodDayStations)
         if (!stations || !this.props.user || !likedStations || !recentlyPlayedStations) return <Loading />
         return (

@@ -18,6 +18,7 @@ export function loadUsers() {
     return async dispatch => {
         try {
             let users = await userService.getUsers()
+            console.log('users are', users);
             dispatch({ type: 'SET_USERS', users })
         } catch (err) {
             console.log('UserActions: err in loadUsers', err)
@@ -129,7 +130,7 @@ export function removeUser(userId) {
 export function updateUser(userToUpdate) {
     return async dispatch => {
         try {
-            let a = await userService.updateUser(userToUpdate)
+            await userService.updateUser(userToUpdate)
             dispatch({ type: 'UPDATE_USER', user: userToUpdate })
         } catch (err) {
             console.log('UserActions: err in removeUser', err)

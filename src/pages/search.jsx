@@ -73,7 +73,9 @@ class _Search extends React.Component {
         // }
     }, 700);
 
-
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
     moveScrollDwon = _.debounce(async () => {
         const homePage = document.querySelector('.station-details')
         if (homePage)

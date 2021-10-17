@@ -1,7 +1,7 @@
 import storageService from './storage.service'
 import axios from 'axios'
-import { stationServiceNew } from './station.service';
-const KEY = 'stations';
+// import { stationServiceNew } from './station.service';
+// const KEY = 'stations';
 let songCache = []
 export const youtubeApiService = {
     searchTrack,
@@ -53,7 +53,9 @@ async function getStationByTag(tagName) {
     try {
         const res = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${tagName}&type=playlist&key=AIzaSyBM9DnPair7lsEiaBpo0qeE55Ok8ncDkks`)
         let stations = await res.data.items.map(async (station) => {
-            const songs = await axios.get(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=${station.id.playlistId}&key=AIzaSyBM9DnPair7lsEiaBpo0qeE55Ok8ncDkks`)
+            let songs = await axios.get(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=${station.id.playlistId}&key=AIzaSyBM9DnPair7lsEiaBpo0qeE55Ok8ncDkks`)
+            songs = [...songs.data.items]
+            songs = songs.filter(song => song.snippet.title !== 'Private video')
             return {
                 genre: tagName,
                 name: station.snippet.title,
@@ -63,16 +65,28 @@ async function getStationByTag(tagName) {
                     fullname: "app",
                     imgUrl: "http://some-photo"
                 },
-                songs: songs.data.items.map((track) => {
-                    if(track.snippet.title==="Private video")return
+                songs: songs.map(song => {
                     return {
-                        id: track.snippet.resourceId.videoId,
-                        title: track.snippet.title,
-                        imgUrl: track.snippet.thumbnails.high ? track.snippet.thumbnails.high.url : track.snippet.thumbnails.default.url,
+                        id: song.snippet.resourceId.videoId,
+                        title: song.snippet.title,
+                        imgUrl: song.snippet.thumbnails.high ? song.snippet.thumbnails.high.url :
+                            song.snippet.thumbnails.default.url,
                         duration: "PT4M26S"
+
                     }
-                    }).filter(track=>track)
-                    
+                })
+
+
+                // songs: songs.data.items.map((track) => {
+                //     if (track.snippet.title === "Private video") return
+                //     return {
+                //         id: track.snippet.resourceId.videoId,
+                //         title: track.snippet.title,
+                //         imgUrl: track.snippet.thumbnails.high ? track.snippet.thumbnails.high.url : track.snippet.thumbnails.default.url,
+                //         duration: "PT4M26S"
+                //     }
+                // }).filter(track => track)
+
             }
         })
         stations = await Promise.all(stations)
