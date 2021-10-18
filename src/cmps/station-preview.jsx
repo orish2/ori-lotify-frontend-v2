@@ -10,14 +10,17 @@ import { withRouter } from "react-router";
 class _StationPreview extends React.Component {
 
     playRandTrack = async () => {
-        const { station, currStation } = this.props
-        if (!currStation || station._id !== currStation._id) {
+        const { station, currTrack, playedStation, } = this.props
+        // if (!currStation || (station._id !== currStation._id )
+        if (!currTrack || playedStation !== station._id ||
+            playedStation !== station.genre
+        ) {
             const songs = [...station.songs];
             const idx = Math.floor(Math.random() * (songs.length))
             const track = songs[idx]
             await this.props.setCurrTrack(track, idx);
-            await this.props.setQueue([...songs], station._id);
-            this.props.setCurrStation(station)
+            await this.props.setQueue([...songs], station._id ? station._id : station.genre);
+            // this.props.setCurrStation(station)
             this.props.setPlay()
         }
         else {
@@ -26,12 +29,12 @@ class _StationPreview extends React.Component {
     }
 
     navigateToStation = (station) => {
-        let stationId = station._id ? station._id : station.name
+        let stationId = station._id ? station._id : station.genre
         this.props.history.push(`/station/${stationId}`)
     }
 
     render() {
-        const { station, currStation, isPlaying } = this.props
+        const { station, isPlaying, playedStation } = this.props
         if (!station) return <div>loading...</div>
         return (
             <div className="station-preview">
@@ -49,7 +52,11 @@ class _StationPreview extends React.Component {
                             this.playRandTrack()
 
                         }}>
-                            <i className={`play-icon ${isPlaying && (station?._id === currStation?._id) ? "fas fa-pause" : "fas fa-play"}`}></i>
+                            {/* this.props.isPlaying && (this.props.playedStation === station._id ||
+                            this.props.playedStation === station.genre)  */}
+                            {/* <i className={`play-icon ${isPlaying && (station?._id === currStation?._id ) ? "fas fa-pause" : "fas fa-play"}`}></i> */}
+                            <i className={`play-icon ${isPlaying && (playedStation === station._id ||
+                                playedStation === station.genre) ? "fas fa-pause" : "fas fa-play"}`}></i>
 
                         </div>
                     </div>
@@ -81,7 +88,7 @@ function mapStateToProps(state) {
         currTrack: state.stationMoudle.currTrack,
         playedStation: state.stationMoudle.playedStation,
         user: state.userMoudle.user,
-        currStation: state.stationMoudle.currStation
+        currStation: state.stationMoudle.currStation,
 
     }
 }

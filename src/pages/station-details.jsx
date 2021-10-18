@@ -180,6 +180,9 @@ class _StationDetails extends Component {
         const { station, isFindMore } = this.state;
         const { stationId } = this.props.match.params;
         if (!station) return <Loading />
+        // console.log('this.props.playedStation === station._id', this.props.playedStation === station._id);
+        // console.log('this.props.playedStation === station.genre', this.props.playedStation === station.genre);
+        // console.log('isPlaying', this.props.isPlaying);
         return (
             <section className='station-details'>
                 <div className="station-head flex">
