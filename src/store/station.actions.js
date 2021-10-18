@@ -5,19 +5,13 @@ import { showSuccessMsg } from '../services/event-bus.service.js';
 // import { AddToRecentlyPlayed } from "./user.actions.js";
 
 export function loadStations() {
-    console.log('loading stations');
     return async (dispatch) => {
         try {
             let stations = await stationServiceNew.getStationsByUser()
-            console.log('stations length', stations.length);
+            // console.log('stations', stations);
             let guestStations = await guestService.query()
-            console.log('guest stations', guestStations);
             if (guestStations && guestStations.length)
                 stations = [...guestStations, ...stations]
-
-            // stations = stations.concat(guestStations)
-            // const allStations = stations.concat()
-            console.log('stationss loaded', stations);
             dispatch({
                 type: 'SET_STATIONS',
                 stations
@@ -33,10 +27,8 @@ export function loadStations() {
 export function addStation(newStation) {
     return async (dispatch) => {
         if (await userService.isGuest()) {
-            console.log('is guest');
             newStation = await guestService.saveStation(newStation)
         } else {
-            console.log('not guest');
             newStation = await stationServiceNew.saveStation(newStation)
         }
         dispatch({
@@ -89,7 +81,10 @@ export function setQueue(queue, stationId = 0) {
                 queue,
                 stationId
             })
-            if (!stationId) return
+            if (!stationId) {
+                console.log('no station id');
+                return
+            }
             await userService.AddToRecentlyPlayed(stationId, 'station')
             dispatch({ type: 'ADD_TO_RECENTLY_PLAYED', stationOrTrack: 'station', stationId })
         }

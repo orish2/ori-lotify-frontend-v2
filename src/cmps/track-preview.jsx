@@ -10,6 +10,7 @@ import { addLikeToTrack, loadUser, removeLikeFromTrack } from '../store/user.act
 import heartNotChecked from '../assets/img/heart-regular.svg';
 import isPlying from '../assets/img/isPlaying.gif'
 import { stationServiceNew } from '../services/station.service';
+import { utilService } from '../services/util.service';
 
 class _TrackPreview extends Component {
     state = {
@@ -162,16 +163,12 @@ class _TrackPreview extends Component {
                 <div className="track-duration">{this.getTimeFromDuration(track.duration)}</div>
                 {!this.props?.isOnDeatils && <div className='likes'>
                     {
-                        //this.state.isLike && <img className='islike' src={heartChecked} onClick={(ev) => { this.toggleLike(ev) }} />
                         this.state.isLike && <span className='isLike fas fa-heart'
                             onClick={this.toggleLike.bind(this)}></span>
-                        // onClick={(ev) => { this.toggleLike(ev) }} ></span>
-                        //  className="fas fa-heart"
                     }
                     {
                         !this.state.isLike && <img alt="" className='isnotLike' src={heartNotChecked}
                             onClick={this.toggleLike.bind(this)} />
-                        //  onClick={(ev) => { this.toggleLike(ev) }} />
                     }
                 </div>}
                 {
@@ -188,7 +185,7 @@ class _TrackPreview extends Component {
                             }>Remove from Playlist</MenuItem>}
                             <SubMenu label="Add to playlist">
                                 {stations.map((station) => {
-                                    return (<MenuItem onClick={() => { this.onAddToStation(track, station._id) }}>{station.name}</MenuItem>)
+                                    return (<MenuItem key={utilService.makeId()} onClick={() => { this.onAddToStation(track, station._id) }}>{station.name}</MenuItem>)
                                 })
                                 }
                                 <MenuItem onClick={() => eventBusService.emit("create-playlist", track)}>Create playlist</MenuItem>

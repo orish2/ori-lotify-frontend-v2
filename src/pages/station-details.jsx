@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { MainLayout } from '../cmps/layout/MainLayout.jsx';
-import { setCurrTrack, addToNextQueue, setQueue, loadStations, toggleIsPlaying } from '../store/station.actions.js';
+import { setCurrTrack, addToNextQueue, setQueue, loadStations, toggleIsPlaying, setPlay } from '../store/station.actions.js';
 import { addLikeToTrack, loadUser, removeLikeFromTrack } from '../store/user.actions';
 import stationImg from '../assets/img/stationImg.jpg'
 import { arrayMoveImmutable } from 'array-move';
@@ -13,7 +13,8 @@ import { stationServiceNew } from '../services/station.service.js';
 import { youtubeApiService } from '../services/youtubeApi.service.js';
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js';
 import { Loading } from '../cmps/Loading.jsx';
-import { userService } from '../services/user.service.js';
+// import { utilService } from '../services/util.service.js';
+// import { userService } from '../services/user.service.js';
 
 class _StationDetails extends Component {
     state = {
@@ -64,21 +65,21 @@ class _StationDetails extends Component {
         const { stationId } = this.props.match.params;
         let station
         try {
-            //only for guest
             station = await stationServiceNew.getStationFromLocal(stationId)//search in local storage
-            if (!station)
+            if (!station) {
                 if (stationId.length === 24) {
                     station = await stationServiceNew.getStationById(stationId)
-                    // console.log('got by id', station);
-                } else {
-                    station = await stationServiceNew.getStationByGenre(stationId)
-                    // console.log('got by genre', station);
                 }
+                else {
+                    station = await stationServiceNew.getStationByGenre(stationId)
+                }
+            }
             if (!station) {
+                console.log('by api');
                 station = await youtubeApiService.getStationByTag(stationId)
-                if (station)
+                if (station) {
                     station = station[0]
-                // console.log('got from api', station);
+                }
             }
             let user;
             if (stationId === 'likedTracks') {
@@ -88,19 +89,15 @@ class _StationDetails extends Component {
                     user = await this.props.user
                 }
                 station.songs = [...user.likedTracks]
-                // if (user.username !== 'guest') {
-                //     station.songs = [...user.likedTracks]
-                // }
-                // else {
-                //     console.log('user songs', user.likedTracks);
-                //     station.songs = await userService.getGuestLiktedSongs()
-                // }
             }
             if (station) {
-                // console.log('station is', station);
-                this.setState({ station, stationId: station._id, songs: station.songs })
+                this.setState({
+                    station, stationId: station._id ? station._id : station.genre,
+                    songs: station.songs
+                })
             }
             else this.setState({ station: [] })
+            console.log('station is ', station);
         }
         catch {
             console.log('had issues');
@@ -108,11 +105,18 @@ class _StationDetails extends Component {
     }
 
     playRandTrack = async () => {
-        if (!this.props.currTrack || this.props.playedStation !== this.state.station._id) {
+        // console.log(this.);
+        if (!this.props.currTrack || this.props.playedStation !== this.state.station._id ||
+            this.props.playedStation !== this.state.station.genre
+        ) {
             const songs = [...this.state.station.songs];
             const idx = Math.floor(Math.random() * (songs.length))
             const track = songs[idx]
             await this.props.setCurrTrack(track, idx);
+            // if (!this.state.station._id)
+            //     await this.props.setQueue([...songs], this.state.station.genre)
+            // else
+            console.log('playing rand track', this.state.stationId);
             await this.props.setQueue([...songs], this.state.stationId);
         }
         this.props.toggleIsPlaying()
@@ -174,11 +178,7 @@ class _StationDetails extends Component {
 
     render() {
         const { station, isFindMore } = this.state;
-        console.log('station from details render', station);
-        // const { user } = this.props;
-        // let songs;
         const { stationId } = this.props.match.params;
-        // if (stationId === 'likedTracks')
         if (!station) return <Loading />
         return (
             <section className='station-details'>
@@ -201,7 +201,8 @@ class _StationDetails extends Component {
                 <Link className="fas back fa-chevron-left" to="/"></Link>
                 <div className='bar-action flex'>
                     <button className="play-rand" onClick={this.playRandTrack}>
-                        <i className={this.props.isPlaying && this.props.playedStation === station._id ? "fas fa-pause" : "fas fa-play"}></i>
+                        <i className={this.props.isPlaying && (this.props.playedStation === station._id ||
+                            this.props.playedStation === station.genre) ? "fas fa-pause" : "fas fa-play"}></i>
                     </button>
 
                     {
@@ -250,6 +251,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
     setCurrTrack,
     setQueue,
+    setPlay,
     loadStations,
     addToNextQueue,
     addLikeToTrack,

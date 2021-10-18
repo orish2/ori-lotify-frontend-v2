@@ -8,7 +8,7 @@ import { setFriendCurrTrack } from '../store/friends.actions.js'
 
 import {
     setPlay, playNextTrack, playPrevTrack, shuffleQueue, toggleIsPlaying,
-    setCurrTrack, setQueue, unshuffleQueue, setCurrStation
+    setCurrTrack, setQueue, unshuffleQueue, setCurrStation, loadStations
 } from '../store/station.actions.js';
 import { Duration } from '../services/util.service';
 import { withRouter } from "react-router";
@@ -55,7 +55,7 @@ class _AppFooter extends Component {
             socketService.emit('play track', { track: this.props.currTrack, user: this.props.user })
             this.isTrackLiked()
             //this.props.toggleIsPlaying();
-            this.props.setPlay()
+            // this.props.setPlay()
             this.setState({ played: 0, duration: 0 })
         }
         if (!this.props.user || !prevProps.user) return
@@ -78,10 +78,15 @@ class _AppFooter extends Component {
         this.setState({ volume: newValue });
     }
 
-    playRandTrack = async (stations) => {
+    playRandTrack = async () => {
+        if (!this.props.stations.length) {
+            console.log('puki ba');
+            await this.props.loadStations()
+        }
+        let { stations } = this.props
         let randIdx = Math.floor(Math.random() * (stations.length))
         let station = stations[randIdx]
-        while (station.genre === 'likedTracks') {
+        while (station.genre && station.genre === 'likedTracks') {
             randIdx = Math.floor(Math.random() * (stations.length))
             station = stations[randIdx]
         }
@@ -96,7 +101,7 @@ class _AppFooter extends Component {
 
     togglePlay = async () => {
         if (!this.props.currTrack) {
-            await this.playRandTrack(this.props.stations)
+            await this.playRandTrack()
         }
         else if (this.state.isLoaded)
             this.props.toggleIsPlaying();
@@ -245,7 +250,7 @@ class _AppFooter extends Component {
                         </div>
                         {track && <div className="like-heart">
                             {
-                                this.state.isLiked && <span className='isLike' onClick={(ev) => { this.toggleLike(ev) }} class="fas fa-heart"></span>
+                                this.state.isLiked && <span className='isLike fas fa-heart' onClick={(ev) => { this.toggleLike(ev) }}></span>
                             }
                             {
                                 !this.state.isLiked && <img className='isnotLike' src={heartNotChecked} onClick={(ev) => { this.toggleLike(ev) }} alt="like" />
@@ -333,7 +338,8 @@ const mapDispatchToProps = {
     setCurrTrack,
     setQueue,
     setFriendCurrTrack,
-    loadUsers
+    loadUsers,
+    loadStations
 }
 
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { MainLayout } from '../cmps/layout/MainLayout'
 import { TrackByUsers } from '../cmps/trackByUsers';
-// import { eventBusService, showSuccessMsg } from '../services/event-bus.service'
 import { socketService } from '../services/socket.service'
 import { connect } from 'react-redux'
 import { loadUsers, loadUser, updateUser } from '../store/user.actions';
@@ -9,7 +8,6 @@ import Avatar from 'react-avatar';
 import { utilService } from '../services/util.service';
 
 
-// var _ = require('lodash');
 class _Friends extends Component {
     state = {
         trackAndUsers: [],
@@ -33,7 +31,6 @@ class _Friends extends Component {
     }
 
     loadUsers = (keySearch = '') => {
-        // console.log('this users', this.props.users);
         if (!keySearch) {
 
             let filteredUsers = this.props.users.filter(user => user.username !== 'guest' ||
@@ -47,12 +44,6 @@ class _Friends extends Component {
         }
     }
 
-    // let filteredUsers = this.props.users.filter(user => {
-    //     if (user._id !== '615b1395706f019209666d5d' && user._id !== this.props.user?._id) {
-    //         return user
-    //     }
-    // })
-    //this.setState({ users: this.props.users })
 
     handleChange = ({ target }) => {
         this.loadUsers(target.value)
@@ -86,8 +77,6 @@ class _Friends extends Component {
                     <div className='friends-nav'>
                         <span className={onFollow ? 'active friends-sub-nav' : 'friends-sub-nav'} onClick={this.setFollow.bind(this, true)}>Follow</span>
                         <span className={!onFollow ? 'active friends-sub-nav' : 'friends-sub-nav'} onClick={this.setFollow.bind(this, false)}>Streaming now</span>
-                        {/* <a className={onFollow ? 'active' : ''} onClick={() => { this.setState({ onFollow: true }) }}>Follow</a>
-                        <a className={!onFollow ? 'active' : ''} onClick={() => { this.setState({ onFollow: false }) }}>Streaming now</a> */}
                     </div>
 
 

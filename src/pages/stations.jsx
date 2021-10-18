@@ -25,7 +25,6 @@ class _Stations extends Component {
     if (!stations) return <h1>loading...</h1>
     const likedSongsStation = this.getLikedSongsStation(stations)
     stations = stations.filter(station => station.genre !== 'likedTracks')
-    console.log('stations after filter from stations', stations);
     return (
       <div className="stations-page">
         <MainLayout>

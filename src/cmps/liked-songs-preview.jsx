@@ -15,7 +15,6 @@ class _LikedSongsPreview extends React.Component {
         await this.props.loadUser();
         let user = this.props.user
         this.setState(ps => ({ ...ps, songs: user.likedTracks }))
-        // console.log('user from liked songs', user);
     }
     playRandTrack = async () => {
         const { station, currStation } = this.props
@@ -28,11 +27,6 @@ class _LikedSongsPreview extends React.Component {
                 user = await this.props.user;
             }
             songs = [...user.likedTracks]
-            // if (user.likedTracks) {
-            // }
-            // else {
-            //     console.log('no liked tracks');
-            // }
             const idx = Math.floor(Math.random() * (songs.length))
             const track = songs[idx]
             await this.props.setCurrTrack(track, idx);

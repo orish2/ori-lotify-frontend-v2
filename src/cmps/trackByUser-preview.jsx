@@ -28,8 +28,7 @@ class _PrackByUserPreview extends Component {
 
 
                 {this.props.track &&
-                    <div className={"track"} onClick={this.handlePlayTrack.bind(this, { track: this.props.track.tack, idx: 0 })}>
-                        {/* < div className={"track"} onClick={() => { this.playTrack(this.props.track.track, 0) }}> */}
+                    <div className={"track"} onClick={this.handlePlayTrack.bind(this, { track: this.props.track.track, idx: 0 })}>
                         <img src={musicLa} alt="" />
                         <div><p> {this.props.track.track.title}</p></div>
                     </div>
@@ -43,8 +42,7 @@ class _PrackByUserPreview extends Component {
                 {this.props.track &&
                     <>
                         <img className='play' alt="" src={play}
-                            onClick={this.handlePlayTrack.bind(this, { track: this.props.track.tack, idx: 0 })} />
-                        {/* onClick={() => { this.playTrack(this.props.track.track, 0) }} src={play} /> */}
+                            onClick={this.handlePlayTrack.bind(this, { track: this.props.track.track, idx: 0 })} />
                         <span className="fas fa-volume-up"></span>
                     </>
                 }
@@ -59,7 +57,6 @@ function mapStateToProps(state) {
     return {
         stations: state.stationMoudle.stations,
         queue: state.stationMoudle.queue,
-        currTrack: state.stationMoudle.currTrack,
         playNextQueue: state.stationMoudle.playNextQueue,
         isPlaying: state.stationMoudle.isPlaying,
         user: state.userMoudle.user,

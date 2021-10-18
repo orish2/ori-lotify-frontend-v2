@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-// import { userService } from '../services/user.service';
 import { connect } from 'react-redux'
-// import { loadUsers, updateUser } from '../store/user.actions';
+import { utilService } from '../services/util.service';
 import { loadUser } from '../store/user.actions';
 import { PrackByUserPreview } from './trackByUser-preview';
-//import streaming from '../assets/img/icon50.png'
 
 class _TrackByUsers extends Component {
     state = {
@@ -41,7 +39,7 @@ class _TrackByUsers extends Component {
                 </div>
                 <div className='user-track'>
                     {user && user.following.map((currUserId) => {
-                        return <PrackByUserPreview users={this.props.users}
+                        return <PrackByUserPreview key={utilService.makeId()} users={this.props.users}
                             currUserId={currUserId} usersImgs={this.props.usersImgs} user={users.find((user => user._id === currUserId))?.username} track={this.getCurrTrack(currUserId)} />
                     })}
 

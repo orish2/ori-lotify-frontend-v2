@@ -44,6 +44,8 @@ export function stationReducer(state = initialState, action) {
             newState = { ...state, queue: action.queue };
             break
         case 'TOGGLE_ISPLAYING':
+            // console.log('is playing??', state.isPlaying);
+            // console.log('toggling');
             newState = { ...state, isPlaying: !state.isPlaying };
             break
         case 'SET_PLAY':

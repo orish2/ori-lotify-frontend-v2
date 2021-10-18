@@ -2,6 +2,19 @@ export const utilService = {
     makeId,
     makeLorem,
     getRandomIntInclusive,
+    makeHexId
+}
+
+function makeHexId(length = 24) {
+    var txt = '';
+    var possible = 'abcdef0123456789';
+
+    for (var i = 0; i < length; i++) {
+        txt += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return txt;
+
 }
 
 function makeId(length = 6) {
