@@ -97,7 +97,7 @@ class _StationDetails extends Component {
                 })
             }
             else this.setState({ station: [] })
-            console.log('station is ', station);
+            // console.log('station is ', station);
         }
         catch {
             console.log('had issues');
@@ -116,7 +116,7 @@ class _StationDetails extends Component {
             // if (!this.state.station._id)
             //     await this.props.setQueue([...songs], this.state.station.genre)
             // else
-            console.log('playing rand track', this.state.stationId);
+            // console.log('playing rand track', this.state.stationId);
             await this.props.setQueue([...songs], this.state.stationId);
         }
         this.props.toggleIsPlaying()
