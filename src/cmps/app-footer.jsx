@@ -94,7 +94,7 @@ class _AppFooter extends Component {
         const idx = Math.floor(Math.random() * (songs.length))
         const track = songs[idx]
         await this.props.setCurrTrack(track, idx);
-        await this.props.setQueue([...songs], station._id);
+        await this.props.setQueue([...songs], station._id ? station._id : station.genre);
         this.props.setCurrStation(station)
         this.props.setPlay()
     }
