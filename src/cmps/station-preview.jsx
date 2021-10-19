@@ -11,16 +11,14 @@ class _StationPreview extends React.Component {
 
     playRandTrack = async () => {
         const { station, currTrack, playedStation, } = this.props
-        // if (!currStation || (station._id !== currStation._id )
-        if (!currTrack || playedStation !== station._id ||
-            playedStation !== station.genre
+        if (!currTrack || (playedStation !== station._id &&
+            playedStation !== station.genre)
         ) {
             const songs = [...station.songs];
             const idx = Math.floor(Math.random() * (songs.length))
             const track = songs[idx]
             await this.props.setCurrTrack(track, idx);
             await this.props.setQueue([...songs], station._id ? station._id : station.genre);
-            // this.props.setCurrStation(station)
             this.props.setPlay()
         }
         else {

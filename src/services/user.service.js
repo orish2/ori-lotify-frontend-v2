@@ -41,7 +41,7 @@ async function signup(user) {
 async function login(credentials) {
     let user = await axios.post(`${URL}/auth/login`, credentials)
     user = user.data
-    console.log('user from login', user);
+    // console.log('user from login', user);
     storageService.saveToStorage(STORAGE_KEY, user)
     return user
 }
@@ -54,7 +54,7 @@ async function logout() {
 
 async function getGuestLiktedSongs() {
     const guestUser = await getLoggedinUser()
-    console.log('likedTracks of guest', guestUser.likedTracks);
+    // console.log('likedTracks of guest', guestUser.likedTracks);
     return guestUser.likedTracks
 
 }
@@ -122,10 +122,10 @@ async function addLikeToTrack(trackId, stationOrTrack) {
         if (!stationToUpdate)
             if (trackId.length === 24) {
                 stationToUpdate = await stationServiceNew.getStationById(trackId)
-                console.log('got by id', stationToUpdate);
+                // console.log('got by id', stationToUpdate);
             } else {
                 stationToUpdate = await stationServiceNew.getStationByGenre(trackId)
-                console.log('got by genre', stationToUpdate);
+                // console.log('got by genre', stationToUpdate);
             }
         socketService.emit('add like', { userIdliked: stationToUpdate.createdBy.id, currUser: user, stationName: stationToUpdate.name })
 
@@ -179,7 +179,7 @@ async function setUserPref(userPref) {
     if (user.username !== "guest") {
         updateUser(user)
     }
-    console.log('guestush user');
+    // console.log('guestush user');
     _saveUserToStorage(user)
     // let user = await axios.get(`${URL}/user/${user._id}`)
     return user

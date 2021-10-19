@@ -61,7 +61,7 @@ async function getStationsByUser() {
 
 async function getStation(idOrGenre) {
     let station = await getStationFromLocal(idOrGenre)
-    console.log('station 64', station);
+    // console.log('station 64', station);
     if (!station)
         station = idOrGenre.length < 24 ? await getStationByGenre(idOrGenre) : await getStationById(idOrGenre)
     return station
@@ -85,7 +85,7 @@ async function getStationFromLocal(stationId) {
     let station = stations.find((station) => station._id === stationId)
     if (!station && stationId !== 'likedTracks' && stationId.length < 24) {
 
-        console.log('statiolnnid', stationId);
+        // console.log('statiolnnid', stationId);
         station = await storageService.loadFromStorage(`${stationId}playlist`)
         // console.log('station is sss', station);
         if (station)
@@ -98,7 +98,7 @@ async function getStationFromLocal(stationId) {
 
 async function getStationByGenre(stationId) {
     const res = await axios.get(`${BASE_URL}/genre/${stationId}`)
-    console.log('got by genre', res.data);
+    // console.log('got by genre', res.data);
     return res.data
 }
 

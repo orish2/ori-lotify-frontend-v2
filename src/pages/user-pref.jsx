@@ -39,12 +39,12 @@ class _UserPref extends Component {
         const { stations, user } = this.props
         if (!stations || !user) return <h1>loading...</h1>
         if (user.userPref.length === 4) {
-            console.log('here 4 prefs');
+            // console.log('here 4 prefs');
             return <Redirect to='/home' />
         }
-        else {
-            console.log('user prefs are' + user.userPref.length);
-        }
+        // else {
+        //     console.log('user prefs are' + user.userPref.length);
+        // }
         return (
             <div className="user-pref">
                 <header>

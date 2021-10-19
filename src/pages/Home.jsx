@@ -52,7 +52,7 @@ class _Home extends Component {
         this._isMounted = true
         await this.props.loadUser();
         await this.props.loadStations();
-        console.log('this pros stations', this.props.stations);
+        // console.log('this pros stations', this.props.stations);
         if (this._isMounted)
             await this.getLikedStation()
         const goodDayStations = await stationServiceNew.getGoodDay()
@@ -95,7 +95,7 @@ class _Home extends Component {
         }
         ))
         let unresolvedPromisesStation = await this.props.user.recentlyPlayedStations.map((stationId => {
-            console.log('recentlyPlayedStations', this.props.user.recentlyPlayedStations);
+            // console.log('recentlyPlayedStations', this.props.user.recentlyPlayedStations);
             return stationServiceNew.getStationById(stationId);
             // return stationServiceNew.getStation(stationId);
         }
