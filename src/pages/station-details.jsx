@@ -106,8 +106,8 @@ class _StationDetails extends Component {
 
     playRandTrack = async () => {
         // console.log(this.);
-        if (!this.props.currTrack || this.props.playedStation !== this.state.station._id ||
-            this.props.playedStation !== this.state.station.genre
+        if (!this.props.currTrack || (this.props.playedStation !== this.state.station._id &&
+            this.props.playedStation !== this.state.station.genre)
         ) {
             const songs = [...this.state.station.songs];
             const idx = Math.floor(Math.random() * (songs.length))

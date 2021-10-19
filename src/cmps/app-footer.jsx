@@ -80,7 +80,6 @@ class _AppFooter extends Component {
 
     playRandTrack = async () => {
         if (!this.props.stations.length) {
-            console.log('puki ba');
             await this.props.loadStations()
         }
         let { stations } = this.props
@@ -212,6 +211,7 @@ class _AppFooter extends Component {
         const { played, duration, volume, isShuffle } = this.state
         const { isPlaying } = this.props
         const track = this.props.currTrack
+        console.log('currTrack', track);
         return (
             <div className="player-container">
                 {
